@@ -1,0 +1,2588 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Token Cost Calculator & Tool Call JSON Validator | October 2026 API Rates (Claude 5.5, GPT-6, Gemini 3, DeepSeek V4.1)</title>
+  <meta name="description" content="Calculate and compare LLM API token costs across active October 2026 models: Claude Opus/Sonnet/Haiku 5.5, OpenAI GPT-6 Astra/Sol/Luna, Google Gemini 3 (3.8 Flash, 3.8 Flash Cyber, 3.1 Pro), and DeepSeek-V4.1 Flash/Pro. Validate AI tool calling schemas 100% client-side.">
+  <meta name="keywords" content="Claude Opus 5.5, Claude Sonnet 5.5, Claude Haiku 5.5, GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna, Gemini 3.8 Flash pricing, Gemini 3.1 Pro Preview, Gemini 3.8 Flash Cyber, DeepSeek V4.1 Flash pricing, DeepSeek-V4-Pro, LLM token calculator 2026, function calling json validator, tool use schema validator, bpe tokenizer">
+  <meta name="author" content="LLM Token Utility">
+  <link rel="canonical" href="https://token-cost-calculator.pages.dev/">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://token-cost-calculator.pages.dev/">
+  <meta property="og:title" content="LLM Token Cost Calculator & Tool Call JSON Validator (October 2026 Edition)">
+  <meta property="og:description" content="Real-time pricing for Claude 5.5 (Opus, Sonnet, Haiku), GPT-6 (Astra, Sol, Luna), Gemini 3 (3.8 Flash, 3.8 Flash Cyber, 3.1 Pro), and DeepSeek-V4.1 (Flash, Pro). 100% client-side schema validator & token calculator.">
+  <meta property="og:site_name" content="LLM Token Cost Calculator">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://token-cost-calculator.pages.dev/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="LLM Token Cost Calculator and Tool Schema Validator: compare API costs and validate JSON locally.">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LLM Token Cost Calculator & Tool Call JSON Validator (October 2026)">
+  <meta name="twitter:description" content="Live cost calculator for Claude 5.5, GPT-6 Astra/Sol/Luna, Gemini 3.8 Flash / 3.1 Pro, and DeepSeek-V4.1. Validate AI tool calling schemas client-side.">
+  <meta name="twitter:image" content="https://token-cost-calculator.pages.dev/og-image.png">
+  <meta name="twitter:image:alt" content="LLM Token Cost Calculator and Tool Schema Validator: compare API costs and validate JSON locally.">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "LLM Token Cost Calculator & Tool Call JSON Validator (2026 Edition)",
+    "url": "https://token-cost-calculator.pages.dev/",
+    "description": "A high-performance, 100% client-side developer utility for estimating token counts and API costs across October 2026 frontier models: Claude 5.5 (Opus, Sonnet, Haiku), OpenAI GPT-6 (Astra, Sol, Luna), Google Gemini 3 (3.8 Flash, 3.8 Flash Cyber, 3.1 Pro Preview), and DeepSeek-V4.1 (Flash, Pro).",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Real-time BPE heuristic token counter with 2M-token context support",
+      "October 2026 Model Catalog: Claude 5.5, GPT-6 Astra/Sol/Luna, Gemini 3 (3.8 Flash, 3.8 Flash Cyber, 3.1 Pro), DeepSeek-V4.1 Flash/Pro",
+      "CJK and multilingual token expansion ratio analysis",
+      "Interactive multi-column table sorting (Total Cost, Input Cost, Output Cost, Context Window, Model Name)",
+      "Simulate prompt caching discounts and DeepSeek peak/off-peak pricing",
+      "Real-time JSON syntax validation with line/column pointers and schema linting",
+      "One-click schema minification and cost transfer to calculator",
+      "URL state synchronization and one-click shareable links",
+      "100% Client-side zero-server privacy guarantee"
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are the official API pricing rates for Anthropic Claude 5.5 models?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "As of October 2026, the Claude 5.5 family pricing is: Claude Opus 5.5 at $4.00/1M input and $20.00/1M output ($0.20 cache read); Claude Sonnet 5.5 at $2.00/1M input and $10.00/1M output ($0.10 cache read); Claude Haiku 5.5 starting at $0.10/1M input and $0.50/1M output ($0.01 cache read). All models feature a 1M token context window."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What models make up the OpenAI GPT-6 family and what is their pricing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The OpenAI GPT-6 series comprises: GPT-6 Astra ($10.00/1M input, $50.00/1M output, $1.00 cached) for frontier scientific research and high-stakes reasoning; GPT-6.1 Sol ($2.00/1M input, $10.00/1M output, $0.10 cached) as the high-efficiency agentic coding workhorse; and GPT-6 Luna ($0.10/1M input, $0.50/1M output, $0.01 cached) for ultra-fast, high-volume ingestion and classification. All three support 1.05M tokens context. These are Standard rates for prompts up to 272k input tokens. Above 272k total input tokens (including cache hits), the entire request uses 2x input/cache rates and 1.5x output rates."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the official API pricing rates for Google Gemini 3 models (Gemini 3.8 Flash & 3.1 Pro)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "As of October 2026, the Gemini 3 family offers: Gemini 3.8 Flash at $0.75/1M input ($0.075 cached) and $3.75/1M output (introductory pricing through Dec 31, 2026, including internal thinking process tokens, 1M context); Gemini 3.8 Flash Cyber at $0.90/1M input and $4.50/1M output ($0.09 cached, 1M context); and Gemini 3.1 Pro Preview at $2.00/1M input ($0.20 cached) and $12.00/1M output with a 2M token context window."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does DeepSeek-V4.1 Flash's Peak vs. Off-Peak pricing model work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "DeepSeek-V4.1-Flash charges Peak rates ($0.30/1M input, $1.20/1M output, $0.006 cache hit) during 01:00-04:00 and 06:00-10:00 UTC Monday-Friday. During Off-Peak hours (all other times and weekends), prices are discounted by 50% ($0.15/1M input, $0.60/1M output, $0.003 cache hit)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do Chinese, Japanese, and Korean (CJK) characters consume more tokens?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "While 2026 tokenizers like DeepSeek-V4 (128k BPE vocabulary) and OpenAI o200k/GPT-6 have significantly improved CJK compression, non-Latin scripts still require ~1.2x to 1.5x more subword tokens than standard English prose. This calculator features live CJK expansion ratio detection to prevent unexpected billing overruns."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my prompt, custom model pricing, or confidential schema sent to any remote server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The entire utility executes 100% locally within your browser. No prompts, code, API keys, or tool schemas are transmitted over the network or saved on remote servers. All custom model rates and editor preferences are stored strictly in your browser's localStorage, and shareable links encode configurations directly in the client URL hash."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857'
+            },
+            accent: {
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7'
+            }
+          },
+          fontFamily: {
+            mono: ['JetBrains Mono', 'Fira Code', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Fallback Styles & AdSense Zero-CLS Rules -->
+  <style>
+    .adsense-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100px;
+      width: 100%;
+      margin: 2.5rem 0;
+      border: 1px dashed rgba(148, 163, 184, 0.4);
+      border-radius: 0.75rem;
+      background-color: rgba(241, 245, 249, 0.6);
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+      overflow: hidden;
+      contain: layout paint;
+    }
+    .dark .adsense-slot {
+      border-color: rgba(71, 85, 105, 0.5);
+      background-color: rgba(15, 23, 42, 0.4);
+    }
+    .adsense-slot-large {
+      min-height: 280px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(241, 245, 249, 0.8);
+    }
+    .dark ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.5);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.8);
+    }
+
+    details > summary {
+      list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+      display: none;
+    }
+    details[open] summary svg.chevron {
+      transform: rotate(180deg);
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      appearance: none;
+      height: 18px;
+      width: 18px;
+      border-radius: 9999px;
+      background: #10b981;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 min-h-screen font-sans antialiased transition-colors duration-200">
+
+  <!-- Toast Notification Container -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 px-4 py-3 rounded-lg shadow-xl border bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white">
+    <span id="toast-icon" class="text-emerald-500 font-bold">✓</span>
+    <span id="toast-message" class="text-sm font-medium">Copied to clipboard</span>
+  </div>
+
+  <!-- Header / Navigation Bar -->
+  <header class="sticky top-0 z-40 w-full backdrop-blur-md bg-white/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+
+      <!-- Brand & Title -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-slate-950 font-bold">
+          <svg class="w-6 h-6 text-slate-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-cyan-600 to-slate-900 dark:from-emerald-400 dark:via-cyan-400 dark:to-white">
+              LLM Token & Tool Validator
+            </h1>
+            <span class="inline-flex items-center gap-1 text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800/40">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Oct 2026 Frontier
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">Claude 5.5 &bull; GPT-6.1 Sol &bull; Gemini 3.8 &bull; DeepSeek-V4.1</p>
+        </div>
+      </div>
+
+      <!-- Navigation & Mode Tabs -->
+      <div class="flex items-center gap-1 sm:gap-2">
+        <nav class="flex bg-slate-200/70 dark:bg-slate-800/80 p-1 rounded-xl border border-slate-300/60 dark:border-slate-700/60" aria-label="Tool views">
+          <button id="tab-calculator-btn" onclick="switchView('calculator')" class="view-tab-btn px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-all text-slate-900 dark:text-white bg-white dark:bg-slate-700 shadow-sm flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+            <span class="hidden md:inline">Token</span> Cost Calculator
+          </button>
+          <button id="tab-validator-btn" onclick="switchView('validator')" class="view-tab-btn px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            <span class="hidden md:inline">Tool</span> Schema Validator
+          </button>
+          <button id="tab-split-btn" onclick="switchView('split')" class="view-tab-btn hidden lg:flex px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 items-center gap-1.5">
+            <svg class="w-4 h-4 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 3v18"/></svg>
+            Split View
+          </button>
+        </nav>
+
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light theme" aria-label="Toggle Dark/Light theme" class="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-300 dark:border-slate-700">
+          <svg id="theme-icon-moon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg id="theme-icon-sun" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Privacy & Security Guarantee Banner -->
+  <aside aria-label="Privacy Guarantee" class="bg-gradient-to-r from-emerald-100/70 via-slate-100 to-cyan-100/70 dark:from-emerald-950/60 dark:via-slate-900 dark:to-cyan-950/60 border-b border-emerald-300/60 dark:border-emerald-800/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between text-xs sm:text-sm text-emerald-800 dark:text-emerald-300">
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span class="font-semibold text-emerald-900 dark:text-emerald-200">100% Client-Side Processing:</span>
+        <span class="text-slate-700 dark:text-slate-300 hidden md:inline">Your prompts, code snippets, and confidential JSON schemas never leave your browser. Zero backend telemetry.</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono bg-emerald-600/10 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-600/20 dark:border-emerald-500/20">October 2026 Live Database</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Application Body -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+
+    <!-- VIEW CONTAINER: CALCULATOR & VALIDATOR -->
+    <div id="views-container" class="space-y-8">
+
+      <!-- ========================================== -->
+      <!-- SECTION A: TOKEN & COST CALCULATOR        -->
+      <!-- ========================================== -->
+      <section id="section-calculator" class="space-y-6">
+
+        <!-- Textarea & Prompt Metrics Container -->
+        <div class="bg-white dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/80 rounded-2xl p-4 sm:p-6 shadow-md dark:shadow-xl backdrop-blur-sm transition-colors">
+
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div class="flex items-center gap-2">
+              <span class="flex h-3 w-3 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+              </span>
+              <h2 class="text-base sm:text-lg font-semibold text-slate-900 dark:text-white">Prompt & Content Input</h2>
+              <span class="text-xs text-slate-500 dark:text-slate-400 font-mono hidden sm:inline">(Live 2026 BPE Estimation)</span>
+            </div>
+
+            <!-- Quick Preset Loaders -->
+            <div class="flex items-center flex-wrap gap-1.5 sm:gap-2">
+              <button onclick="loadSamplePrompt('system')" class="px-2.5 py-1 text-xs rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-700/80 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 transition-colors border border-slate-200 dark:border-slate-600/50">
+                System Prompt
+              </button>
+              <button onclick="loadSamplePrompt('code')" class="px-2.5 py-1 text-xs rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-700/80 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 transition-colors border border-slate-200 dark:border-slate-600/50">
+                Python Code
+              </button>
+              <button onclick="loadSamplePrompt('cjk')" class="px-2.5 py-1 text-xs rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-700/80 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 transition-colors border border-slate-200 dark:border-slate-600/50">
+                Multilingual / CJK
+              </button>
+              <button onclick="pasteClipboardToCalculator()" class="px-2.5 py-1 text-xs rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-700/80 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 transition-colors border border-slate-200 dark:border-slate-600/50 flex items-center gap-1">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="8" y="2" rx="1"/></svg>
+                Paste
+              </button>
+              <button onclick="clearCalculatorInput()" class="px-2.5 py-1 text-xs rounded-lg bg-red-100 hover:bg-red-200 dark:bg-red-950/30 dark:hover:bg-red-900/40 text-red-700 dark:text-red-300 transition-colors border border-red-200 dark:border-red-800/40">
+                Clear
+              </button>
+            </div>
+          </div>
+
+          <!-- Input Textarea -->
+          <div class="relative">
+            <textarea
+              id="calc-input"
+              rows="7"
+              class="w-full bg-slate-50 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700 rounded-xl p-4 font-mono text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all resize-y"
+              placeholder="Paste or type your prompt, Markdown document, or tool definition here to inspect token density and live costs across Claude 5.5, GPT-6.1 Sol, Gemini 3.8, and DeepSeek-V4.1..."
+              oninput="handleCalculatorInputUpdate()"
+            ></textarea>
+          </div>
+
+          <!-- Live Metrics Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/60">
+
+            <div class="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 rounded-xl p-3">
+              <div class="text-xs text-slate-500 dark:text-slate-400">Estimated Tokens</div>
+              <div id="stat-tokens" class="text-xl sm:text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400 mt-0.5">0</div>
+              <div class="text-[11px] text-slate-500">~BPE subwords</div>
+            </div>
+
+            <div class="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 rounded-xl p-3">
+              <div class="text-xs text-slate-500 dark:text-slate-400">Total Characters</div>
+              <div id="stat-chars" class="text-xl sm:text-2xl font-bold font-mono text-cyan-600 dark:text-cyan-400 mt-0.5">0</div>
+              <div id="stat-chars-no-space" class="text-[11px] text-slate-500">0 excl. spaces</div>
+            </div>
+
+            <div class="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 rounded-xl p-3">
+              <div class="text-xs text-slate-500 dark:text-slate-400">Word Count</div>
+              <div id="stat-words" class="text-xl sm:text-2xl font-bold font-mono text-indigo-600 dark:text-indigo-400 mt-0.5">0</div>
+              <div id="stat-reading-time" class="text-[11px] text-slate-500">&lt; 1 min read</div>
+            </div>
+
+            <div class="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 rounded-xl p-3">
+              <div class="text-xs text-slate-500 dark:text-slate-400">Line Count</div>
+              <div id="stat-lines" class="text-xl sm:text-2xl font-bold font-mono text-amber-600 dark:text-amber-400 mt-0.5">0</div>
+              <div class="text-[11px] text-slate-500">structural breaks</div>
+            </div>
+
+            <!-- CJK Characters Metric with Dynamic Expansion Indicator -->
+            <div id="stat-cjk-card" class="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 rounded-xl p-3 transition-all">
+              <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                <span>CJK Characters</span>
+                <span id="stat-cjk-badge" class="hidden text-[10px] font-mono px-1.5 py-0.2 rounded bg-pink-100 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300 border border-pink-200 dark:border-pink-800/40">CJK Active</span>
+              </div>
+              <div class="flex items-baseline gap-2 mt-0.5">
+                <span id="stat-cjk" class="text-xl sm:text-2xl font-bold font-mono text-pink-600 dark:text-pink-400">0</span>
+                <span id="stat-cjk-ratio-container" class="hidden text-xs font-mono font-semibold text-pink-600 dark:text-pink-300">
+                  ~<span id="stat-cjk-ratio">1.35</span>x
+                </span>
+              </div>
+              <div class="text-[11px] text-slate-500">Chinese/Jpn/Kor</div>
+            </div>
+
+            <div class="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 rounded-xl p-3">
+              <div class="text-xs text-slate-500 dark:text-slate-400">Char / Token Ratio</div>
+              <div id="stat-density" class="text-xl sm:text-2xl font-bold font-mono text-purple-600 dark:text-purple-400 mt-0.5">0.00</div>
+              <div class="text-[11px] text-slate-500">chars per token</div>
+            </div>
+
+          </div>
+
+          <!-- Dynamic CJK Expansion Alert Banner -->
+          <div id="cjk-expansion-alert" class="hidden mt-3 p-3 rounded-xl bg-pink-50 dark:bg-pink-950/30 border border-pink-200 dark:border-pink-900/40 text-xs text-pink-900 dark:text-pink-200 flex items-start gap-2.5 shadow-sm transition-all">
+            <svg class="w-4 h-4 flex-shrink-0 text-pink-500 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            <div>
+              <span class="font-semibold text-pink-800 dark:text-pink-200">CJK / Multilingual Token Expansion Ratio: ~<span id="cjk-expansion-ratio-val">1.35</span>x vs. ASCII English.</span>
+              <span class="text-pink-700 dark:text-pink-300 ml-1">Non-ASCII scripts incur higher subword token overhead; consider <span class="font-mono bg-pink-100 dark:bg-pink-900/60 px-1 py-0.5 rounded text-pink-900 dark:text-pink-100 font-semibold">DeepSeek-V4 (128k BPE)</span> or <span class="font-mono bg-pink-100 dark:bg-pink-900/60 px-1 py-0.5 rounded text-pink-900 dark:text-pink-100 font-semibold">GPT-6 Sol / Claude 5.5</span> for superior East Asian character compression.</span>
+            </div>
+          </div>
+
+          <!-- Token Estimation Algorithm Disclaimer -->
+          <div class="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800/80 pt-2.5">
+            <div class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="16" y2="12"/><line x1="12" x2="12.01" y1="8" y2="8"/></svg>
+              <span>Tokens estimated via standard BPE heuristic (~0.75 words/token). Variance depends on model vocabulary, non-Latin scripts, and formatting tokens.</span>
+            </div>
+            <a href="#audit-log" class="text-emerald-600 dark:text-emerald-400 hover:underline flex-shrink-0">View Audit Log &darr;</a>
+          </div>
+
+        </div>
+
+        <!-- Simulation Controls: Output Tokens & Scale Slider -->
+        <div id="simulation-parameters" class="bg-white dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/80 rounded-2xl p-4 sm:p-6 shadow-md dark:shadow-xl backdrop-blur-sm space-y-6 transition-colors">
+
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h3 class="text-base font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                Output & Transaction Simulation Parameters (October 2026)
+              </h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Configure estimated completion length, volume scaling, caching discounts, and DeepSeek off-peak rates.</p>
+            </div>
+
+            <!-- Action Buttons: Share Link & Custom Pricing -->
+            <div class="flex items-center flex-wrap gap-2">
+              <button onclick="copyShareLink()" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-medium rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-cyan-700 dark:text-cyan-300 border border-slate-300 dark:border-slate-600 shadow-sm transition-all">
+                <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
+                Share Calculation / Copy Link
+              </button>
+
+              <button onclick="openCustomPricingModal()" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-medium rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-emerald-700 dark:text-emerald-300 border border-slate-300 dark:border-slate-600 shadow-sm transition-all">
+                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+                Add / Edit Custom Model
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- 1. Output Tokens Slider -->
+            <div class="space-y-3 bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200 dark:border-slate-700/60">
+              <div class="flex items-center justify-between">
+                <label for="output-slider" class="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200">
+                  Estimated Output Tokens:
+                </label>
+                <div class="flex items-center gap-1">
+                  <input
+                    type="number"
+                    id="output-tokens-input"
+                    class="w-20 px-2 py-1 text-right text-sm font-mono bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded text-emerald-600 dark:text-emerald-400 focus:outline-none focus:border-emerald-500"
+                    value="1000"
+                    min="0"
+                    max="16384"
+                    oninput="handleOutputTokensInput(this.value)"
+                  />
+                  <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">tokens</span>
+                </div>
+              </div>
+
+              <input
+                type="range"
+                id="output-slider"
+                min="0"
+                max="8192"
+                step="64"
+                value="1000"
+                class="w-full h-2 bg-slate-300 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer"
+                oninput="handleOutputSliderChange(this.value)"
+              />
+
+              <!-- Quick Output Presets -->
+              <div class="flex items-center justify-between gap-1 pt-1">
+                <button onclick="setOutputTokens(256)" class="px-2 py-0.5 text-[11px] rounded bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono">256</button>
+                <button onclick="setOutputTokens(512)" class="px-2 py-0.5 text-[11px] rounded bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono">512</button>
+                <button onclick="setOutputTokens(1000)" class="px-2 py-0.5 text-[11px] rounded bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono">1k</button>
+                <button onclick="setOutputTokens(2048)" class="px-2 py-0.5 text-[11px] rounded bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono">2k</button>
+                <button onclick="setOutputTokens(4000)" class="px-2 py-0.5 text-[11px] rounded bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono">4k</button>
+                <button onclick="setOutputTokens(8192)" class="px-2 py-0.5 text-[11px] rounded bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono">8k</button>
+              </div>
+            </div>
+
+            <!-- 2. Request Volume Multiplier -->
+            <div class="space-y-3 bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200 dark:border-slate-700/60">
+              <label class="block text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200">
+                Call Volume Scale:
+              </label>
+
+              <div class="grid grid-cols-4 gap-1.5 pt-1">
+                <button onclick="setVolumeMultiplier(1, this)" class="vol-btn active px-2 py-2 text-xs font-mono font-medium rounded-lg bg-emerald-600 text-white transition-all shadow-sm">1 Call</button>
+                <button onclick="setVolumeMultiplier(1000, this)" class="vol-btn px-2 py-2 text-xs font-mono font-medium rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all">1K Calls</button>
+                <button onclick="setVolumeMultiplier(100000, this)" class="vol-btn px-2 py-2 text-xs font-mono font-medium rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all">100K Calls</button>
+                <button onclick="setVolumeMultiplier(1000000, this)" class="vol-btn px-2 py-2 text-xs font-mono font-medium rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all">1M Calls</button>
+              </div>
+              <div class="text-[11px] text-slate-500 dark:text-slate-400">Evaluate aggregate invoice costs across monthly API traffic.</div>
+            </div>
+
+            <!-- 3. Prompt Caching & DeepSeek Off-Peak Simulator -->
+            <div id="cache-controls-card" class="space-y-3 bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200 dark:border-slate-700/60 transition-all">
+              <div class="flex items-center justify-between">
+                <label class="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200">
+                  Prompt Caching Discount:
+                </label>
+                <span id="cache-discount-label" class="text-xs font-mono text-cyan-600 dark:text-cyan-400">0% (Cache Miss)</span>
+              </div>
+
+              <div class="grid grid-cols-3 gap-1.5 pt-1">
+                <button onclick="setCacheRate(0, this)" class="cache-btn active px-2 py-2 text-xs font-mono font-medium rounded-lg bg-cyan-600 text-white transition-all shadow-sm">0% Miss</button>
+                <button onclick="setCacheRate(0.5, this)" class="cache-btn px-2 py-2 text-xs font-mono font-medium rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all">50% Hit</button>
+                <button onclick="setCacheRate(0.8, this)" class="cache-btn px-2 py-2 text-xs font-mono font-medium rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all">80% Hit</button>
+              </div>
+
+              <!-- DeepSeek Off-Peak Switch -->
+              <div class="flex items-center justify-between pt-1 border-t border-slate-200 dark:border-slate-800">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                  <span>DeepSeek Off-Peak Mode:</span>
+                  <span title="DeepSeek API offers 50% discount outside 01:00-04:00 & 06:00-10:00 UTC and all weekends" class="cursor-help text-slate-400 hover:text-slate-200">ⓘ</span>
+                </span>
+                <button id="deepseek-offpeak-toggle" onclick="toggleDeepSeekOffPeak()" class="px-2 py-0.5 text-[11px] font-mono rounded bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                  Off-Peak: OFF (Peak Rates)
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Filter & Sorter Toolbar -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+
+            <!-- Provider Filter Pills -->
+            <div class="flex items-center flex-wrap gap-1.5">
+              <span class="text-xs text-slate-500 dark:text-slate-400 mr-1">Provider:</span>
+              <button onclick="filterByProvider('all', this)" class="provider-pill active px-2.5 py-1 text-xs rounded-lg font-medium bg-slate-800 text-white dark:bg-slate-700">All Models</button>
+              <button onclick="filterByProvider('OpenAI', this)" class="provider-pill px-2.5 py-1 text-xs rounded-lg font-medium bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300">OpenAI (GPT-6)</button>
+              <button onclick="filterByProvider('Anthropic', this)" class="provider-pill px-2.5 py-1 text-xs rounded-lg font-medium bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300">Anthropic (Claude 5.5)</button>
+              <button onclick="filterByProvider('Google', this)" class="provider-pill px-2.5 py-1 text-xs rounded-lg font-medium bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300">Google (Gemini 3)</button>
+              <button onclick="filterByProvider('DeepSeek', this)" class="provider-pill px-2.5 py-1 text-xs rounded-lg font-medium bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300">DeepSeek (V4.1)</button>
+              <button onclick="filterByProvider('Custom', this)" class="provider-pill px-2.5 py-1 text-xs rounded-lg font-medium bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300">Custom</button>
+            </div>
+
+            <!-- Sorter Dropdown -->
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-slate-500 dark:text-slate-400">Sort by:</span>
+              <select id="sort-select" onchange="handleSortSelectChange(this.value)" class="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1 text-xs text-slate-800 dark:text-slate-200 focus:outline-none">
+                <option value="cost-asc">Total Cost (Lowest First)</option>
+                <option value="cost-desc">Total Cost (Highest First)</option>
+                <option value="input-asc">Input Cost (Lowest First)</option>
+                <option value="input-desc">Input Cost (Highest First)</option>
+                <option value="output-asc">Output Cost (Lowest First)</option>
+                <option value="output-desc">Output Cost (Highest First)</option>
+                <option value="context-desc">Context Size (Largest First)</option>
+                <option value="context-asc">Context Size (Smallest First)</option>
+                <option value="name-asc">Model Name (A to Z)</option>
+                <option value="name-desc">Model Name (Z to A)</option>
+                <option value="provider-asc">Provider Name (A to Z)</option>
+              </select>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Cost Comparison Table -->
+        <div id="cost-matrix-section" class="bg-white dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/80 rounded-2xl shadow-md dark:shadow-xl overflow-hidden backdrop-blur-sm transition-colors">
+
+          <div class="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-700/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h3 class="text-base font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m16 10-4 4-4-4"/></svg>
+                Reactive Multi-Model Cost Matrix (October 2026 Live Database)
+              </h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Click any column header to toggle sort order. Frontier 2026 dataset: Claude 5.5, GPT-6 (Astra/Sol/Luna), Gemini 3 (3.8 Flash/3.1 Pro), and DeepSeek-V4.1.</p>
+            </div>
+
+            <!-- Timeliness Badge -->
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 text-xs text-emerald-800 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800/60 px-3 py-1.5 rounded-full font-mono font-semibold shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Updated: October 2026 API Rates
+              </span>
+            </div>
+          </div>
+
+          <!-- Table Wrapper for Mobile Scrolling -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="bg-slate-100 dark:bg-slate-900/80 text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700">
+
+                  <th onclick="toggleSort('name')" class="py-3 px-4 cursor-pointer select-none hover:text-slate-900 dark:hover:text-white transition-colors" title="Click to sort by Model Name">
+                    <div class="flex items-center gap-1.5">
+                      <span>Model & Provider</span>
+                      <span id="sort-icon-name" class="font-mono text-xs text-slate-400">↕</span>
+                    </div>
+                  </th>
+
+                  <th onclick="toggleSort('context')" class="py-3 px-3 text-right cursor-pointer select-none hover:text-slate-900 dark:hover:text-white transition-colors" title="Click to sort by Context Window">
+                    <div class="flex items-center justify-end gap-1.5">
+                      <span>Context</span>
+                      <span id="sort-icon-context" class="font-mono text-xs text-slate-400">↕</span>
+                    </div>
+                  </th>
+
+                  <th onclick="toggleSort('input')" class="py-3 px-3 text-right cursor-pointer select-none hover:text-slate-900 dark:hover:text-white transition-colors" title="Click to sort by Input Cost">
+                    <div class="flex items-center justify-end gap-1.5">
+                      <span>Input Cost</span>
+                      <span id="sort-icon-input" class="font-mono text-xs text-slate-400">↕</span>
+                    </div>
+                  </th>
+
+                  <th onclick="toggleSort('output')" class="py-3 px-3 text-right cursor-pointer select-none hover:text-slate-900 dark:hover:text-white transition-colors" title="Click to sort by Output Cost">
+                    <div class="flex items-center justify-end gap-1.5">
+                      <span>Output Cost</span>
+                      <span id="sort-icon-output" class="font-mono text-xs text-slate-400">↕</span>
+                    </div>
+                  </th>
+
+                  <th onclick="toggleSort('cost')" class="py-3 px-4 text-right cursor-pointer select-none hover:text-slate-900 dark:hover:text-white transition-colors" title="Click to sort by Total Cost">
+                    <div class="flex items-center justify-end gap-1.5">
+                      <span id="table-header-total">Total Cost (1 Call)</span>
+                      <span id="sort-icon-cost" class="font-mono text-xs text-emerald-500 font-bold">▲</span>
+                    </div>
+                  </th>
+
+                  <th scope="col" class="py-3 px-3 text-center">Pricing Rates ($/1M)</th>
+                </tr>
+              </thead>
+              <tbody id="cost-table-body" class="divide-y divide-slate-200 dark:divide-slate-700/50 font-mono">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <!-- Pricing Data Sources & Audit Log (Audited October 2026) -->
+        <details id="audit-log" class="border border-slate-200 dark:border-slate-700/80 rounded-2xl bg-white dark:bg-slate-800/70 p-4 sm:p-5 text-xs shadow-md backdrop-blur-sm transition-all">
+          <summary class="font-semibold text-slate-800 dark:text-slate-200 cursor-pointer flex items-center justify-between select-none">
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span class="text-sm">Pricing Data Sources &amp; Audit Log (Verified October 2026)</span>
+            </div>
+            <span class="text-slate-400 font-mono text-[11px] flex items-center gap-1">Audit Anchor: October 9, 2026 <svg class="chevron w-3.5 h-3.5 text-slate-400 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </summary>
+          <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700/60 space-y-3 text-slate-600 dark:text-slate-300">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-[11px]">
+              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2 flex flex-col justify-between">
+                <div>
+                  <div class="font-bold text-slate-900 dark:text-white flex items-center justify-between flex-wrap gap-1">
+                    <span class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-emerald-500"></span> OpenAI Official Platform
+                    </span>
+                    <a href="https://developers.openai.com/api/docs/pricing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400 hover:underline">
+                      <span>developers.openai.com/api/docs/pricing</span>
+                      <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                    </a>
+                  </div>
+                  <p class="mt-1 text-slate-600 dark:text-slate-300">Audited against official OpenAI API pricing announcements for GPT-6 Astra ($10.00/$50.00), GPT-6.1 Sol ($2.00/$10.00), and GPT-6 Luna ($0.10/$0.50). Reflects Standard rates and 90%–95% prompt caching discounts. Above 272k total input tokens (including cache hits), input/cache rates double and output rates rise by 50% for the entire request; the calculator applies this tier automatically.</p>
+                </div>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2 flex flex-col justify-between">
+                <div>
+                  <div class="font-bold text-slate-900 dark:text-white flex items-center justify-between flex-wrap gap-1">
+                    <span class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-purple-500"></span> Anthropic Claude Documentation
+                    </span>
+                    <a href="https://docs.anthropic.com/en/docs/about-claude/models" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] font-medium text-purple-600 dark:text-purple-400 hover:underline">
+                      <span>docs.anthropic.com/models</span>
+                      <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                    </a>
+                  </div>
+                  <p class="mt-1 text-slate-600 dark:text-slate-300">Audited against Anthropic API pricing console for Claude 5.5 (Opus 5.5, Sonnet 5.5, Haiku 5.5). Includes 5-minute cache write TTL rules, 90%–95% cache read discounts, and 1M context limits.</p>
+                </div>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2 flex flex-col justify-between">
+                <div>
+                  <div class="font-bold text-slate-900 dark:text-white flex items-center justify-between flex-wrap gap-1">
+                    <span class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-blue-500"></span> Google Cloud / Vertex AI &amp; AI Studio
+                    </span>
+                    <a href="https://ai.google.dev/pricing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                      <span>ai.google.dev/pricing</span>
+                      <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                    </a>
+                  </div>
+                  <p class="mt-1 text-slate-600 dark:text-slate-300">Audited against Google Cloud Vertex AI developer rates for Gemini 3.8 Flash, Gemini 3.8 Flash Cyber, and Gemini 3.1 Pro Preview (including tiered pricing notes for prompts exceeding 200k tokens).</p>
+                </div>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2 flex flex-col justify-between">
+                <div>
+                  <div class="font-bold text-slate-900 dark:text-white flex items-center justify-between flex-wrap gap-1">
+                    <span class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-cyan-500"></span> DeepSeek Open Platform
+                    </span>
+                    <a href="https://platform.deepseek.com/api-docs/pricing/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] font-medium text-cyan-600 dark:text-cyan-400 hover:underline">
+                      <span>platform.deepseek.com/pricing</span>
+                      <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                    </a>
+                  </div>
+                  <p class="mt-1 text-slate-600 dark:text-slate-300">Audited against DeepSeek API dynamic pricing schedules for DeepSeek-V4.1-Flash and DeepSeek-V4-Pro (including UTC 01:00-04:00 &amp; 06:00-10:00 peak hours and 50% off-peak window).</p>
+                </div>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400 dark:text-slate-500 italic">Audit Note: Rates are cross-verified quarterly against official provider release notes. For high-volume enterprise SLA commitments or custom cloud partner discounts (AWS Bedrock, Azure OpenAI, Google Cloud Vertex), contact your vendor representative.</p>
+          </div>
+        </details>
+
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION B: TOOL CALL & JSON VALIDATOR     -->
+      <!-- ========================================== -->
+      <section id="section-validator" class="space-y-6 hidden">
+
+        <div class="bg-white dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/80 rounded-2xl p-4 sm:p-6 shadow-md dark:shadow-xl backdrop-blur-sm space-y-4 transition-colors">
+
+          <!-- Header and Sample Templates -->
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+            <div>
+              <h2 class="text-base sm:text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                <svg class="w-5 h-5 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                AI Tool Schema & Function Call Validator
+              </h2>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Validate OpenAI Function Calling definitions, Anthropic Claude Tool schemas, and Tool Call payload arguments.</p>
+            </div>
+
+            <!-- One-Click Sample Loaders -->
+            <div class="flex items-center flex-wrap gap-1.5 sm:gap-2">
+              <span class="text-xs text-slate-500 dark:text-slate-400 mr-1">Samples:</span>
+              <button onclick="loadSampleSchema('openai')" class="px-2.5 py-1 text-xs rounded-lg bg-emerald-100 hover:bg-emerald-200 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 transition-colors border border-emerald-300 dark:border-emerald-800/50">
+                OpenAI Function
+              </button>
+              <button onclick="loadSampleSchema('claude')" class="px-2.5 py-1 text-xs rounded-lg bg-purple-100 hover:bg-purple-200 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 text-purple-800 dark:text-purple-300 transition-colors border border-purple-300 dark:border-purple-800/50">
+                Claude Tool Use
+              </button>
+              <button onclick="loadSampleSchema('execution')" class="px-2.5 py-1 text-xs rounded-lg bg-cyan-100 hover:bg-cyan-200 dark:bg-cyan-950/40 dark:hover:bg-cyan-900/50 text-cyan-800 dark:text-cyan-300 transition-colors border border-cyan-300 dark:border-cyan-800/50">
+                Tool Call Payload
+              </button>
+              <button onclick="loadSampleSchema('multi')" class="px-2.5 py-1 text-xs rounded-lg bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/50 text-indigo-800 dark:text-indigo-300 transition-colors border border-indigo-300 dark:border-indigo-800/50">
+                Multi-Tool Array
+              </button>
+            </div>
+          </div>
+
+          <!-- Validator Action Bar with Closed-Loop Estimation Buttons -->
+          <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-100 dark:bg-slate-900/70 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700/60">
+
+            <div class="flex items-center gap-2">
+              <div id="json-status-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium font-sans bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700">
+                <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                Waiting for JSON input...
+              </div>
+
+              <span id="schema-detected-pill" class="hidden text-xs px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 font-sans"></span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <button onclick="formatJson()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors border border-slate-300 dark:border-slate-700 flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Format
+              </button>
+
+              <button onclick="minifyJson()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors border border-slate-300 dark:border-slate-700 flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14h6m-6-4h6m8-4-4 4 4 4"/></svg>
+                Minify
+              </button>
+
+              <button onclick="copyJsonToClipboard()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors border border-slate-300 dark:border-slate-700 flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                Copy
+              </button>
+
+              <!-- Closed Loop Actions -->
+              <button onclick="estimateSchemaTokenCost(false)" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition-all shadow-sm flex items-center gap-1.5" title="Transfer schema to Cost Calculator and calculate cost">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+                <span>Estimate Schema Token Cost</span>
+              </button>
+
+              <button onclick="estimateSchemaTokenCost(true)" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-cyan-700 hover:bg-cyan-600 text-white transition-all shadow-sm flex items-center gap-1.5" title="Minify JSON schema to reduce overhead and immediately calculate cost">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                <span>Minify & Estimate Cost</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- JSON Editor Textarea -->
+          <div class="relative">
+            <textarea
+              id="json-input"
+              rows="12"
+              class="w-full bg-slate-50 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700 rounded-xl p-4 font-mono text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all resize-y"
+              placeholder="Paste your JSON Schema, OpenAI Function definition, Anthropic Tool schema, or raw tool call arguments here..."
+              oninput="handleJsonInputUpdate()"
+            ></textarea>
+          </div>
+
+          <!-- Error Diagnostics Box (Conditional) -->
+          <div id="json-error-container" class="hidden bg-red-50 dark:bg-red-950/30 border border-red-300 dark:border-red-800/60 rounded-xl p-4 text-xs font-mono space-y-2">
+            <div class="flex items-start justify-between">
+              <div class="flex items-center gap-2 text-red-600 dark:text-red-400 font-semibold text-sm">
+                <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                <span>JSON Syntax Error</span>
+                <span id="json-error-location" class="text-xs bg-red-200 dark:bg-red-900/60 px-2 py-0.5 rounded text-red-800 dark:text-red-200">Line 1, Col 1</span>
+              </div>
+            </div>
+
+            <p id="json-error-message" class="text-red-700 dark:text-red-300 font-sans"></p>
+            <p id="json-error-hint" class="text-amber-700 dark:text-amber-300/90 font-sans text-[11px]"></p>
+
+            <div id="json-error-context" class="bg-white dark:bg-slate-950/80 p-3 rounded-lg border border-red-300 dark:border-red-900/40 text-slate-800 dark:text-slate-300 overflow-x-auto whitespace-pre font-mono"></div>
+          </div>
+
+          <!-- Schema Analysis & Recommendations (Conditional) -->
+          <div id="schema-analysis-container" class="hidden bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 rounded-xl p-4 text-xs space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                AI Function Calling Schema Diagnostics
+              </span>
+              <div id="schema-badges" class="flex items-center gap-1.5 flex-wrap"></div>
+            </div>
+
+            <div id="schema-warnings-list" class="space-y-1.5 text-amber-700 dark:text-amber-300"></div>
+
+            <div id="schema-summary-details" class="text-slate-600 dark:text-slate-400 grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-slate-200 dark:border-slate-800"></div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- ADVERTISEMENT PLACEHOLDER SLOT 1 (Zero-CLS Compliant)    -->
+    <!-- ======================================================== -->
+    <div id="ad-slot-header" class="adsense-slot adsense-slot-leaderboard max-w-4xl mx-auto my-8 p-4 flex flex-col items-center justify-center min-h-[90px]" aria-label="Advertisement Container">
+      <span class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-mono font-medium">ADVERTISEMENT</span>
+      <!-- Uncomment upon AdSense activation:
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="XXXXXXXXXX"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      -->
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- SEO & ADSENSE COMPLIANT EDUCATIONAL CONTENT SCAFFOLD     -->
+    <!-- ======================================================== -->
+    <article class="max-w-4xl mx-auto space-y-12 text-slate-700 dark:text-slate-300 leading-relaxed pt-4 border-t border-slate-200 dark:border-slate-800">
+
+      <!-- SECTION 1: HOW LLM TOKENIZATION WORKS (OCTOBER 2026 EDITION) -->
+      <section id="tokenization-guide" class="space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-800/40">
+          Technical Deep Dive &bull; October 2026 Edition
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+          How LLM Tokenization Works: Tokens vs. Words vs. Characters (2026 Frontier Models)
+        </h2>
+        <p>
+          Large Language Models in late 2026—such as <strong>Claude 5.5 (Opus, Sonnet, Haiku)</strong>, OpenAI’s <strong>GPT-6.1 Sol & Astra</strong>, Google’s <strong>Gemini 3.8 Flash</strong>, and DeepSeek’s <strong>V4.1 Flash & Pro</strong>—do not ingest raw text strings. Instead, they operate on numerical token embeddings. Understanding how subword tokenization models differ across modern architectures is the single highest-leverage lever for optimizing enterprise inference budgets.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+          <div class="bg-white dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
+            <h4 class="font-semibold text-slate-900 dark:text-white text-sm mb-1">Standard English Text</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">1 token averages ~4 characters or ~0.75 English words. Common words like "function", "prompt", and "database" occupy exactly one token.</p>
+          </div>
+          <div class="bg-white dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
+            <h4 class="font-semibold text-slate-900 dark:text-white text-sm mb-1">Code & JSON Tool Schemas</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Braces, quotes, whitespace indentations, and camelCase syntax fragment words, consuming roughly 1 token per 2.4 to 3 characters.</p>
+          </div>
+          <div class="bg-white dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
+            <h4 class="font-semibold text-slate-900 dark:text-white text-sm mb-1">CJK & Multilingual Characters</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">DeepSeek-V4 (128k BPE vocabulary) and GPT-6/Claude 5.5 achieve modern ~1.2x–1.4x token efficiency per CJK character compared to older models.</p>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-semibold text-slate-900 dark:text-slate-100 pt-2">The 2026 Tokenizer Evolution: 1M Context & Byte-Level Architectures</h3>
+        <p>
+          In 2026, context windows standardizing at <strong>1 Million+ tokens</strong> (Claude 5.5 at 1M, GPT-6.1 at 1.05M, Gemini 3.8 at 1M, DeepSeek-V4.1 at 1M) have forced model providers to balance vocabulary matrix memory against subword compression density:
+        </p>
+        <ul class="list-disc pl-5 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+          <li>
+            <strong class="text-slate-900 dark:text-white">DeepSeek-V4.1 (128K Vocabulary Byte-level BPE):</strong> Optimized with a multi-language pre-tokenizer that merges adjacent punctuation and indentation characters, drastically reducing KV cache pressures for Asian languages and structured data.
+          </li>
+          <li>
+            <strong class="text-slate-900 dark:text-white">Anthropic Claude 5.5 Byte Tokenizer:</strong> Provides ultra-stable subword preservation with reduced pricing on prompt cache reads (Sonnet 5.5 down to $0.10/1M).
+          </li>
+          <li>
+            <strong class="text-slate-900 dark:text-white">Google Gemini 3.8 Thinking Tokens:</strong> Output tokens now include internal chain-of-thought reasoning steps directly in completion token meters.
+          </li>
+          <li>
+            <strong class="text-slate-900 dark:text-white">OpenAI GPT-6.1 Sol vs. Astra:</strong> Shared tokenization structure with a 5x cost difference ($2.00 vs. $10.00 input), making Sol the default for autonomous coding loops.
+          </li>
+        </ul>
+      </section>
+
+      <!-- SECTION 2: PRODUCTION COST OPTIMIZATION TIPS -->
+      <section id="optimization-tips" class="space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-cyan-100 text-cyan-800 dark:bg-cyan-950/60 dark:text-cyan-400 border border-cyan-300 dark:border-cyan-800/40">
+          Architecture Best Practices &bull; 2026 Production Playbook
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+          How to Optimize Prompt Costs in Production: 4 Actionable 2026 Strategies
+        </h2>
+
+        <div class="space-y-6 mt-4">
+
+          <div class="bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 p-5 rounded-xl space-y-2 shadow-sm">
+            <h3 class="text-lg font-semibold text-emerald-700 dark:text-emerald-300 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400 flex items-center justify-center text-xs font-bold">1</span>
+              Leverage Claude 5.5 & GPT-6 Cache Breakpoint Discounts
+            </h3>
+            <p class="text-sm">
+              With Anthropic reducing Claude Sonnet 5.5 cache read costs by 50% down to <strong>$0.10 per million tokens</strong> ($0.20/1M on Opus 5.5), and OpenAI pricing cached inputs at <strong>$0.10/1M</strong> on GPT-6.1 Sol, structuring prompts around cache breakpoints delivers up to <strong>95% savings</strong> on repeated system prompts and knowledge context.
+            </p>
+          </div>
+
+          <div class="bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 p-5 rounded-xl space-y-2 shadow-sm">
+            <h3 class="text-lg font-semibold text-cyan-700 dark:text-cyan-300 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-cyan-100 text-cyan-800 dark:bg-cyan-500/20 dark:text-cyan-400 flex items-center justify-center text-xs font-bold">2</span>
+              Exploit DeepSeek-V4.1 Peak vs. Off-Peak Dynamic Scheduling
+            </h3>
+            <p class="text-sm">
+              DeepSeek-V4.1-Flash offers a <strong>50% discount during off-peak hours</strong> (all times outside 01:00-04:00 & 06:00-10:00 UTC, and entire weekends). Routing background asynchronous tasks, daily document embeddings, and batch evals to off-peak slots cuts input costs to $0.15/1M and output to $0.60/1M.
+            </p>
+          </div>
+
+          <div class="bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 p-5 rounded-xl space-y-2 shadow-sm">
+            <h3 class="text-lg font-semibold text-indigo-700 dark:text-indigo-300 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-500/20 dark:text-indigo-400 flex items-center justify-center text-xs font-bold">3</span>
+              Compress & Minify AI Tool Calling JSON Schemas
+            </h3>
+            <p class="text-sm">
+              When injecting tool calling definitions into 1M-context agent loops, redundant whitespace and verbose schema documentation consume hundreds of tokens per turn. Using our <strong>Minify</strong> utility cuts tool token footprints by 20% to 35% with zero loss in schema compliance.
+            </p>
+          </div>
+
+          <div class="bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 p-5 rounded-xl space-y-2 shadow-sm">
+            <h3 class="text-lg font-semibold text-purple-700 dark:text-purple-300 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-800 dark:bg-purple-500/20 dark:text-purple-400 flex items-center justify-center text-xs font-bold">4</span>
+              Tiered Cascading: Route Between GPT-6.1 Sol, Claude Haiku 5.5 & Gemini 3.8 Flash
+            </h3>
+            <p class="text-sm">
+              Instead of directing all requests to flagship frontier models ($10–$50/1M), employ subagent routing: dispatch classification and extraction to <strong>Claude Haiku 5.5</strong> ($0.10/1M in) or <strong>GPT-6 Luna</strong> ($0.10/1M in), utilize <strong>GPT-6.1 Sol</strong> ($2.00/1M in) and <strong>Gemini 3.8 Flash</strong> ($0.75/1M in) for code and agentic execution, and reserve <strong>Claude Opus 5.5</strong>, <strong>Gemini 3.1 Pro</strong>, or <strong>GPT-6 Astra</strong> strictly for final synthesis and complex arbitration.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- ADVERTISEMENT PLACEHOLDER SLOT 2 (Zero-CLS Compliant)    -->
+      <!-- ======================================================== -->
+    <div id="ad-slot-article" class="adsense-slot adsense-slot-large max-w-2xl mx-auto my-8 p-6 flex flex-col items-center justify-center min-h-[250px]" aria-label="Advertisement Container">
+      <span class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-mono font-medium">ADVERTISEMENT</span>
+        <!-- Uncomment upon AdSense activation:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="YYYYYYYYYY"
+             data-ad-format="rectangle"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+      </div>
+
+      <!-- SECTION 3: FREQUENTLY ASKED QUESTIONS (FAQ) ACCORDION -->
+      <section id="faq-section" class="space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-400 border border-indigo-300 dark:border-indigo-800/40">
+          Knowledge Base & FAQ
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+          Frequently Asked Questions (October 2026 Edition)
+        </h2>
+
+        <div class="space-y-3 mt-6">
+
+          <details class="group bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 rounded-xl p-4 transition-all shadow-sm">
+            <summary class="flex items-center justify-between cursor-pointer font-medium text-slate-900 dark:text-white text-base">
+              <span>What are the official API pricing rates for Anthropic Claude 5.5 models?</span>
+              <svg class="chevron w-5 h-5 text-slate-400 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="mt-3 text-sm text-slate-600 dark:text-slate-300 border-t border-slate-200 dark:border-slate-700/60 pt-3">
+              As of October 2026: <strong>Claude Opus 5.5</strong> is $4.00/1M input and $20.00/1M output ($0.20 cache read); <strong>Claude Sonnet 5.5</strong> is $2.00/1M input and $10.00/1M output ($0.10 cache read); <strong>Claude Haiku 5.5</strong> starts from $0.10/1M input and $0.50/1M output ($0.01 cache read). All three models support a 1M token context window.
+            </div>
+          </details>
+
+          <details class="group bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 rounded-xl p-4 transition-all shadow-sm">
+            <summary class="flex items-center justify-between cursor-pointer font-medium text-slate-900 dark:text-white text-base">
+              <span>What models make up the OpenAI GPT-6 family and what is their pricing?</span>
+              <svg class="chevron w-5 h-5 text-slate-400 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="mt-3 text-sm text-slate-600 dark:text-slate-300 border-t border-slate-200 dark:border-slate-700/60 pt-3">
+              The OpenAI GPT-6 series comprises: <strong>GPT-6 Astra</strong> ($10.00/1M input, $50.00/1M output, $1.00 cached) for frontier scientific research and high-stakes reasoning; <strong>GPT-6.1 Sol</strong> ($2.00/1M input, $10.00/1M output, $0.10 cached) as the high-efficiency agentic coding workhorse; and <strong>GPT-6 Luna</strong> ($0.10/1M input, $0.50/1M output, $0.01 cached) for ultra-fast, high-volume ingestion and classification. All three support 1.05M tokens context. These are Standard rates for prompts up to 272k input tokens. Above 272k total input tokens (including cache hits), the entire request uses 2x input/cache rates and 1.5x output rates.
+            </div>
+          </details>
+
+          <details class="group bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 rounded-xl p-4 transition-all shadow-sm">
+            <summary class="flex items-center justify-between cursor-pointer font-medium text-slate-900 dark:text-white text-base">
+              <span>What are the official API pricing rates for Google Gemini 3 models (Gemini 3.8 Flash & 3.1 Pro)?</span>
+              <svg class="chevron w-5 h-5 text-slate-400 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="mt-3 text-sm text-slate-600 dark:text-slate-300 border-t border-slate-200 dark:border-slate-700/60 pt-3">
+              As of October 2026, the Gemini 3 family offers: <strong>Gemini 3.8 Flash</strong> at $0.75/1M input ($0.075 cached) and $3.75/1M output (introductory pricing through Dec 31, 2026, including internal thinking process tokens, 1M context); <strong>Gemini 3.8 Flash Cyber</strong> at $0.90/1M input and $4.50/1M output ($0.09 cached, 1M context); and <strong>Gemini 3.1 Pro Preview</strong> at $2.00/1M input ($0.20 cached) and $12.00/1M output with a 2M token context window.
+            </div>
+          </details>
+
+          <details class="group bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 rounded-xl p-4 transition-all shadow-sm">
+            <summary class="flex items-center justify-between cursor-pointer font-medium text-slate-900 dark:text-white text-base">
+              <span>How does DeepSeek-V4.1 Flash's Peak vs. Off-Peak pricing model work?</span>
+              <svg class="chevron w-5 h-5 text-slate-400 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="mt-3 text-sm text-slate-600 dark:text-slate-300 border-t border-slate-200 dark:border-slate-700/60 pt-3">
+              DeepSeek-V4.1-Flash charges Peak rates ($0.30/1M input, $1.20/1M output, $0.006 cache hit) during 01:00-04:00 and 06:00-10:00 UTC Monday-Friday. During Off-Peak hours (all other times and weekends), prices are discounted by 50% ($0.15/1M input, $0.60/1M output, $0.003 cache hit). You can toggle the Off-Peak switch in our simulator to see adjusted costs.
+            </div>
+          </details>
+
+          <details class="group bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 rounded-xl p-4 transition-all shadow-sm">
+            <summary class="flex items-center justify-between cursor-pointer font-medium text-slate-900 dark:text-white text-base">
+              <span>Is my prompt or confidential schema sent to any remote server?</span>
+              <svg class="chevron w-5 h-5 text-slate-400 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="mt-3 text-sm text-slate-600 dark:text-slate-300 border-t border-slate-200 dark:border-slate-700/60 pt-3">
+              No. The entire utility executes 100% locally within your browser. No prompts, code, API keys, or tool schemas are transmitted over the network or saved on remote servers. All custom model rates and editor preferences are stored strictly in your browser's localStorage. Shareable links encode configuration parameters safely in the client-side URL hash without server persistence.
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+    </article>
+
+  </main>
+
+  <!-- CUSTOM PRICING MODAL -->
+  <div id="custom-pricing-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 text-slate-900 dark:text-white">
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-bold flex items-center gap-2">
+          <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Custom Model Pricing Rates
+        </h3>
+        <button onclick="closeCustomPricingModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-white p-1">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-500 dark:text-slate-400">Add a self-hosted or proprietary model rate. Stored safely in your local browser storage.</p>
+
+      <form id="custom-model-form" onsubmit="saveCustomModel(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Model Name</label>
+          <input type="text" id="custom-model-name" required placeholder="e.g. Llama-3.3-70B-Instruct" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Provider Tag</label>
+            <input type="text" id="custom-model-provider" required placeholder="e.g. Together AI, Fireworks" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Context Window</label>
+            <input type="text" id="custom-model-context" required placeholder="e.g. 1M or 128k" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Input Cost ($/1M tokens)</label>
+            <input type="number" step="0.0001" id="custom-model-input-rate" required placeholder="e.g. 0.80" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Output Cost ($/1M tokens)</label>
+            <input type="number" step="0.0001" id="custom-model-output-rate" required placeholder="e.g. 0.80" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500" />
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-2">
+          <button type="button" onclick="clearCustomModels()" class="text-xs text-red-600 dark:text-red-400 hover:underline">
+            Reset Custom Models
+          </button>
+          <div class="flex gap-2">
+            <button type="button" onclick="closeCustomPricingModal()" class="px-4 py-2 text-xs rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300">
+              Cancel
+            </button>
+            <button type="submit" class="px-4 py-2 text-xs rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium">
+              Save Model
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PRIVACY POLICY MODAL -->
+  <div id="privacy-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-4 text-slate-900 dark:text-white max-h-[85vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <h3 class="text-lg font-bold flex items-center gap-2">
+          <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Privacy Policy
+        </h3>
+        <button onclick="closePrivacyModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-white p-1">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="text-xs text-slate-600 dark:text-slate-300 space-y-3 leading-relaxed">
+        <p><strong>Effective Date:</strong> October 9, 2026</p>
+
+        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">1. 100% Client-Side Local Evaluation Guarantee</h4>
+        <p>This web utility processes all text, prompt content, source code snippets, and AI Tool Calling JSON Schemas strictly inside your web browser runtime using local JavaScript heuristics (Byte-Pair Encoding approximation). <strong>None of your prompt text, schemas, confidential parameters, or API rates are ever sent to, recorded by, or retained on any remote server.</strong></p>
+
+        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">2. Third-Party Services, Cookies &amp; Advertising Compliance</h4>
+        <p>To support ongoing maintenance, this website may load third-party vendor services such as Google AdSense or standard website performance analytics. These third-party vendors, including Google, may use cookies, web beacons, or unique device identifiers to serve advertisements based on user visits in accordance with the standard Google Privacy &amp; Terms.</p>
+        <p>Google's use of advertising cookies enables it and its partners to serve ads to users based on their visits. Users may opt out of personalized advertising at any time by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" class="text-cyan-600 dark:text-cyan-400 underline">Google Ads Settings</a>. For more information, please review the <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" class="text-cyan-600 dark:text-cyan-400 underline">Google Privacy &amp; Technologies</a> documentation.</p>
+
+        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">3. Local Browser Storage</h4>
+        <p>Preferences such as Dark/Light theme selection and user-defined custom model pricing rates are stored exclusively in your browser's local storage (<code class="font-mono bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">localStorage</code>). You may clear this data at any time via your browser settings or by clicking "Reset Custom Models".</p>
+
+        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">4. Contact &amp; Inquiry</h4>
+        <p>If you have any questions or data privacy feedback, please contact us at <a href="mailto:support@token-calculator.dev" class="text-emerald-600 dark:text-emerald-400 underline">support@token-calculator.dev</a> or report an issue on our GitHub project repository.</p>
+      </div>
+
+      <div class="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+        <button onclick="closePrivacyModal()" class="px-4 py-2 text-xs rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium">
+          Understood &amp; Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERMS OF SERVICE MODAL -->
+  <div id="terms-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-4 text-slate-900 dark:text-white max-h-[85vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <h3 class="text-lg font-bold flex items-center gap-2">
+          <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Terms of Service
+        </h3>
+        <button onclick="closeTermsModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-white p-1">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="text-xs text-slate-600 dark:text-slate-300 space-y-3 leading-relaxed">
+        <p><strong>Effective Date:</strong> October 9, 2026</p>
+
+        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">1. Informational Estimation Disclaimer</h4>
+        <p>All token counts and price estimates produced by this calculator are heuristics intended for system design, budget planning, and educational architecture. Because official LLM providers (OpenAI, Anthropic, Google, DeepSeek) apply proprietary tokenizers (e.g. tiktoken cl100k/o200k, DeepSeek 128k BPE), actual API bills may deviate slightly.</p>
+
+        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">2. Provider Rates &amp; Tiered Pricing Changes</h4>
+        <p>Model rates reflect publicly audited documentation as of October 2026. Special conditions (such as Gemini 3.1 Pro 200k token tiers, Anthropic 5-minute cache TTL, or DeepSeek peak-hour windows) should be independently verified on provider consoles for mission-critical enterprise deployments.</p>
+
+        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">3. License &amp; Permitted Use</h4>
+        <p>This tool is freely provided under the MIT License for both commercial engineering and personal development budgeting. No warranty or liability is assumed for business decisions made based on these calculations.</p>
+      </div>
+
+      <div class="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+        <button onclick="closeTermsModal()" class="px-4 py-2 text-xs rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer with Community & Social Ingress Links -->
+  <footer class="mt-16 border-t border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950/60 py-8 text-xs text-slate-500 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span class="font-medium text-slate-700 dark:text-slate-300">LLM Token Cost Calculator & Tool Call JSON Validator</span>
+          <span class="text-slate-400">&bull;</span>
+          <span class="text-emerald-600 dark:text-emerald-400 font-mono font-semibold">October 2026 Live Database</span>
+        </div>
+
+        <!-- Compliance & Community Links -->
+        <div class="flex items-center flex-wrap gap-3 sm:gap-4 text-slate-600 dark:text-slate-400">
+          <a href="#privacy" onclick="openPrivacyModal(); return false;" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Privacy Policy</a>
+          <span class="text-slate-300 dark:text-slate-700">&bull;</span>
+          <a href="#terms" onclick="openTermsModal(); return false;" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Terms of Service</a>
+          <span class="text-slate-300 dark:text-slate-700">&bull;</span>
+          <div class="inline-flex items-center gap-1.5 bg-slate-200/60 dark:bg-slate-800/60 px-2 py-0.5 rounded-lg border border-slate-300 dark:border-slate-700">
+            <a href="mailto:support@token-calculator.dev?subject=LLM%20Token%20Calculator%20Feedback" class="hover:text-emerald-600 dark:hover:text-emerald-400 flex items-center gap-1 transition-colors" title="Send email feedback">
+              <svg class="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <span>support@token-calculator.dev</span>
+            </a>
+            <button onclick="copyFeedbackEmail()" title="Copy email address" class="p-0.5 hover:text-emerald-600 dark:hover:text-emerald-400 text-slate-400 transition-colors">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </div>
+          <span class="text-slate-300 dark:text-slate-700">&bull;</span>
+          <a href="https://github.com/huyongbo668881985/tokens" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-600 dark:hover:text-emerald-400 flex items-center gap-1 transition-colors">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            <span>GitHub</span>
+          </a>
+          <span class="text-slate-300 dark:text-slate-700">&bull;</span>
+          <a href="#section-calculator" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Back to Top</a>
+        </div>
+
+      </div>
+
+      <div class="text-[11px] text-slate-400 dark:text-slate-500 border-t border-slate-200 dark:border-slate-800/80 pt-3 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <span>🔒 Zero telemetry on prompts &amp; schemas. 100% Client-Side Local Evaluation.</span>
+        <span>Local Time Anchor: October 2026 Edition</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================== -->
+  <!-- APPLICATION LOGIC & CLIENT-SIDE CORE JAVASCRIPT         -->
+  <!-- ======================================================== -->
+  <script>
+    // ========================================================
+    // 1. MODEL CATALOG & STATE (VERIFIED OCTOBER 2026 DATASET)
+    // ========================================================
+    const DEFAULT_MODELS = [
+      // Anthropic Claude 5.5 Family (Released Sept/Oct 2026)
+      { id: 'claude-opus-5-5', name: 'Claude Opus 5.5', provider: 'Anthropic', inputPerM: 4.00, cachedInputPerM: 0.20, outputPerM: 20.00, context: '1M', tag: 'Frontier Agentic & Deep Reasoning (2026)', billingNote: 'Prompt Caching write: $5.00/1M (5-min TTL), read: $0.20/1M (-95% discount). Batch API: 50% discount.' },
+      { id: 'claude-sonnet-5-5', name: 'Claude Sonnet 5.5', provider: 'Anthropic', inputPerM: 2.00, cachedInputPerM: 0.10, outputPerM: 10.00, context: '1M', tag: 'Coding & General Workhorse (2026)', billingNote: 'Prompt Caching write: $2.50/1M (5-min TTL), read: $0.10/1M (-95% discount). Batch API: 50% discount.' },
+      { id: 'claude-haiku-5-5', name: 'Claude Haiku 5.5', provider: 'Anthropic', inputPerM: 0.10, cachedInputPerM: 0.01, outputPerM: 0.50, context: '1M', tag: 'Ultra-Fast Subagent & High-Volume (2026)', billingNote: 'Standard prompts ≤100k tokens: $0.10/1M in, $0.50/1M out. Prompts >100k tokens step up to $0.50/1M in and $2.50/1M out. Cache read: $0.01/1M.', tierThreshold: 100000, tierInputPerM: 0.50, tierOutputPerM: 2.50, tierCachedInputPerM: 0.05, tierBadge: '>100k Tier Active' },
+
+      // OpenAI GPT-6 Family & Reasoning (Released Sept 2026)
+      // Official Standard rates: >272K total input tokens (including cache hits)
+      // applies 2x input/cache and 1.5x output rates to the entire request.
+      { id: 'gpt-6-astra', name: 'GPT-6 Astra', provider: 'OpenAI', inputPerM: 10.00, cachedInputPerM: 1.00, outputPerM: 50.00, context: '1.05M', tag: 'Frontier Scientific & Reasoning Flagship (2026)', billingNote: 'Standard prompts ≤272k: $10.00/1M in, $1.00 cached, $50.00 out. Prompts >272k: $20.00 in, $2.00 cached, $75.00 out for the entire request. Fast Mode: 2x applicable rates.', tierThreshold: 272000, tierInputPerM: 20.00, tierOutputPerM: 75.00, tierCachedInputPerM: 2.00, tierBadge: '>272k Tier Active' },
+      { id: 'gpt-6-1-sol', name: 'GPT-6.1 Sol', provider: 'OpenAI', inputPerM: 2.00, cachedInputPerM: 0.10, outputPerM: 10.00, context: '1.05M', tag: 'Agentic Coding & Business Workflows (2026)', billingNote: 'Standard prompts ≤272k: $2.00/1M in, $0.10 cached, $10.00 out. Prompts >272k: $4.00 in, $0.20 cached, $15.00 out for the entire request.', tierThreshold: 272000, tierInputPerM: 4.00, tierOutputPerM: 15.00, tierCachedInputPerM: 0.20, tierBadge: '>272k Tier Active' },
+      { id: 'gpt-6-luna', name: 'GPT-6 Luna', provider: 'OpenAI', inputPerM: 0.10, cachedInputPerM: 0.01, outputPerM: 0.50, context: '1.05M', tag: 'High-Speed & Ultra-Low Cost Ingestion (2026)', billingNote: 'Standard prompts ≤272k: $0.10/1M in, $0.01 cached, $0.50 out. Prompts >272k: $0.20 in, $0.02 cached, $0.75 out for the entire request.', tierThreshold: 272000, tierInputPerM: 0.20, tierOutputPerM: 0.75, tierCachedInputPerM: 0.02, tierBadge: '>272k Tier Active' },
+
+      // Google Gemini 3 Generation (Released Sept/Oct 2026)
+      { id: 'gemini-3-1-pro', name: 'Gemini 3.1 Pro Preview', provider: 'Google', inputPerM: 2.00, cachedInputPerM: 0.20, outputPerM: 12.00, context: '2M', tag: '2M Long Context Frontier Multimodal (2026)', billingNote: 'Prompts ≤200k tokens: $2.00/1M in, $12.00/1M out. Prompts >200k tokens automatically step up to $4.00/1M in and $18.00/1M out. Cache read: $0.20/1M (≤200k) / $0.40/1M (>200k).', tierThreshold: 200000, tierInputPerM: 4.00, tierOutputPerM: 18.00, tierCachedInputPerM: 0.40, tierBadge: '>200k Tier Active' },
+      { id: 'gemini-3-8-flash-cyber', name: 'Gemini 3.8 Flash Cyber', provider: 'Google', inputPerM: 0.90, cachedInputPerM: 0.09, outputPerM: 4.50, context: '1M', tag: 'Automated Patching & Security Reasoning (2026)', billingNote: 'Google Fairwind cybersecurity program variant. Output rate includes internal reasoning thinking tokens.' },
+      { id: 'gemini-3-8-flash', name: 'Gemini 3.8 Flash', provider: 'Google', inputPerM: 0.75, cachedInputPerM: 0.075, outputPerM: 3.75, context: '1M', tag: 'Thinking Tokens & Agentic Flash Workhorse (2026)', billingNote: 'Introductory rate through Dec 31, 2026. Internal thinking process tokens are billed as output tokens.' },
+
+      // DeepSeek V4.1 & V4 Family (2026 Peak/Off-Peak Architecture)
+      { id: 'deepseek-v4-pro', name: 'DeepSeek-V4-Pro', provider: 'DeepSeek', inputPerM: 1.32, cachedInputPerM: 0.044, outputPerM: 3.96, context: '1M', tag: 'Frontier MoE Pro Reasoning (2026)', billingNote: 'Dynamic peak billing: 01:00-04:00 & 06:00-10:00 UTC M-F. 50% discount off-peak ($0.66 in / $1.98 out).', peakInput: 1.32, offPeakInput: 0.66, peakOutput: 3.96, offPeakOutput: 1.98, peakCache: 0.044, offPeakCache: 0.022 },
+      { id: 'deepseek-v4-1-flash', name: 'DeepSeek-V4.1-Flash', provider: 'DeepSeek', inputPerM: 0.30, cachedInputPerM: 0.006, outputPerM: 1.20, context: '1M', tag: 'Peak/Off-Peak 128k BPE High Throughput (2026)', billingNote: 'Dynamic peak billing: 01:00-04:00 & 06:00-10:00 UTC M-F. 50% discount off-peak ($0.15 in / $0.60 out).', peakInput: 0.30, offPeakInput: 0.15, peakOutput: 1.20, offPeakOutput: 0.60, peakCache: 0.006, offPeakCache: 0.003 }
+    ];
+
+    let customModels = [];
+    try {
+      const stored = localStorage.getItem('llm_custom_models');
+      if (stored) customModels = JSON.parse(stored);
+    } catch(e) {}
+
+    const appState = {
+      inputText: '',
+      inputTokens: 0,
+      outputTokens: 1000,
+      volumeMultiplier: 1,
+      cacheDiscountRate: 0,
+      isDeepSeekOffPeak: false,
+      providerFilter: 'all',
+      sortBy: 'cost-asc',
+      currentView: 'calculator',
+      isDark: true
+    };
+
+    function parseContextTokens(ctx) {
+      if (!ctx) return 0;
+      const cleaned = String(ctx).toLowerCase().trim();
+      if (cleaned.endsWith('m')) return parseFloat(cleaned) * 1_000_000;
+      if (cleaned.endsWith('k')) return parseFloat(cleaned) * 1_000;
+      return parseFloat(cleaned) || 0;
+    }
+
+    // Toggle DeepSeek Off-Peak Discount Mode
+    function toggleDeepSeekOffPeak() {
+      appState.isDeepSeekOffPeak = !appState.isDeepSeekOffPeak;
+      const btn = document.getElementById('deepseek-offpeak-toggle');
+      if (appState.isDeepSeekOffPeak) {
+        btn.textContent = 'Off-Peak: ON (50% Off)';
+        btn.className = 'px-2 py-0.5 text-[11px] font-mono rounded bg-emerald-600 text-white font-medium shadow-sm transition-colors';
+        showToast('DeepSeek Off-Peak Mode activated (-50% rate)');
+      } else {
+        btn.textContent = 'Off-Peak: OFF (Peak Rates)';
+        btn.className = 'px-2 py-0.5 text-[11px] font-mono rounded bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors';
+        showToast('DeepSeek Standard Peak Rates restored');
+      }
+      renderCostTable();
+    }
+
+    // ========================================================
+    // 2. ADVANCED BPE HEURISTIC TOKENIZER WITH CJK ANALYSIS
+    // ========================================================
+    function estimateTokens(text) {
+      if (!text || text.length === 0) {
+        return { tokens: 0, chars: 0, charsNoSpace: 0, words: 0, lines: 0, cjkCount: 0, cjkExpansionRatio: '1.00', density: '0.00', readingTimeMinutes: 0 };
+      }
+
+      const chars = text.length;
+      const charsNoSpace = text.replace(/\s/g, '').length;
+      const lines = text.split('\n').length;
+      const wordsMatch = text.trim().match(/\S+/g);
+      const words = wordsMatch ? wordsMatch.length : 0;
+      const readingTimeMinutes = Math.max(1, Math.ceil(words / 200));
+
+      const cjkRegex = /[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff\u3040-\u309f\u30a0-\u30ff\uac00-\ud7af]/g;
+      const cjkMatches = text.match(cjkRegex) || [];
+      const cjkCount = cjkMatches.length;
+
+      // In 2026 models (DeepSeek-V4 128k BPE & Claude 5.5 & GPT-6), CJK compression achieves ~1.25-1.3 tokens per char
+      const cjkTokens = Math.ceil(cjkCount * 1.3);
+
+      const nonCjk = text.replace(cjkRegex, ' ');
+
+      const emojiRegex = /\p{Extended_Pictographic}/gu;
+      const emojiMatches = nonCjk.match(emojiRegex) || [];
+      const emojiTokens = emojiMatches.length * 2.2;
+      const cleanText = nonCjk.replace(emojiRegex, ' ');
+
+      const tokenRegex = /(?:'[sS]|'[tT]|'[rR][eE]|'[vV][eE]|'[mM]|'[lL][lL]|'[dD])|[^\r\n\p{L}\p{N}\s]+|\p{L}+|\p{N}{1,3}|[\s]+/gu;
+      let subwordTokens = 0;
+      const matches = cleanText.match(tokenRegex) || [];
+
+      for (const m of matches) {
+        if (/^\s+$/.test(m)) {
+          const newlines = (m.match(/\n/g) || []).length;
+          if (newlines > 0) {
+            subwordTokens += newlines;
+            const spaces = m.replace(/\n/g, '').length;
+            if (spaces > 0) subwordTokens += Math.ceil(spaces / 3);
+          } else {
+            if (m.length > 1) subwordTokens += Math.floor(m.length / 3);
+          }
+        } else if (/^\p{N}+$/u.test(m)) {
+          subwordTokens += Math.ceil(m.length / 3);
+        } else if (/^\p{L}+$/u.test(m)) {
+          if (m.length <= 4) {
+            subwordTokens += 1;
+          } else if (m.length <= 8) {
+            subwordTokens += 1.5;
+          } else if (m.length <= 12) {
+            subwordTokens += 2.4;
+          } else {
+            subwordTokens += Math.ceil(m.length / 3.8);
+          }
+        } else {
+          if (m.length <= 2) {
+            subwordTokens += 1;
+          } else {
+            subwordTokens += Math.ceil(m.length / 2);
+          }
+        }
+      }
+
+      const rawEstimate = Math.round(cjkTokens + emojiTokens + subwordTokens);
+      const tokens = Math.max(1, rawEstimate);
+      const density = (chars / tokens).toFixed(2);
+
+      let cjkExpansionRatio = '1.00';
+      if (cjkCount > 0) {
+        const expectedAsciiTokens = Math.max(1, Math.round(chars / 4.0));
+        const ratio = (tokens / expectedAsciiTokens);
+        cjkExpansionRatio = Math.max(1.1, Math.min(3.0, ratio)).toFixed(2);
+      }
+
+      return { tokens, chars, charsNoSpace, words, lines, cjkCount, cjkExpansionRatio, density, readingTimeMinutes };
+    }
+
+    // ========================================================
+    // 3. UI REACTIVITY & EVENT HANDLERS
+    // ========================================================
+    function handleCalculatorInputUpdate() {
+      const text = document.getElementById('calc-input').value;
+      appState.inputText = text;
+      const metrics = estimateTokens(text);
+      appState.inputTokens = metrics.tokens;
+
+      document.getElementById('stat-tokens').textContent = formatNumber(metrics.tokens);
+      document.getElementById('stat-chars').textContent = formatNumber(metrics.chars);
+      document.getElementById('stat-chars-no-space').textContent = `${formatNumber(metrics.charsNoSpace)} excl. spaces`;
+      document.getElementById('stat-words').textContent = formatNumber(metrics.words);
+      document.getElementById('stat-reading-time').textContent = metrics.words > 0 ? `~${metrics.readingTimeMinutes} min read` : '< 1 min read';
+      document.getElementById('stat-lines').textContent = formatNumber(metrics.lines);
+      document.getElementById('stat-cjk').textContent = formatNumber(metrics.cjkCount);
+      document.getElementById('stat-density').textContent = metrics.density;
+
+      const cjkCard = document.getElementById('stat-cjk-card');
+      const cjkBadge = document.getElementById('stat-cjk-badge');
+      const cjkRatioContainer = document.getElementById('stat-cjk-ratio-container');
+      const cjkRatioEl = document.getElementById('stat-cjk-ratio');
+      const cjkAlert = document.getElementById('cjk-expansion-alert');
+      const cjkAlertVal = document.getElementById('cjk-expansion-ratio-val');
+
+      if (metrics.cjkCount > 0) {
+        cjkCard.classList.add('ring-2', 'ring-pink-500/50', 'bg-pink-50/50', 'dark:bg-pink-950/20');
+        cjkBadge.classList.remove('hidden');
+        cjkRatioContainer.classList.remove('hidden');
+        cjkRatioEl.textContent = metrics.cjkExpansionRatio;
+        cjkAlert.classList.remove('hidden');
+        cjkAlertVal.textContent = metrics.cjkExpansionRatio;
+      } else {
+        cjkCard.classList.remove('ring-2', 'ring-pink-500/50', 'bg-pink-50/50', 'dark:bg-pink-950/20');
+        cjkBadge.classList.add('hidden');
+        cjkRatioContainer.classList.add('hidden');
+        cjkAlert.classList.add('hidden');
+      }
+
+      renderCostTable();
+    }
+
+    function handleOutputSliderChange(val) {
+      const num = parseInt(val, 10) || 0;
+      appState.outputTokens = num;
+      document.getElementById('output-tokens-input').value = num;
+      renderCostTable();
+    }
+
+    function handleOutputTokensInput(val) {
+      const num = Math.max(0, parseInt(val, 10) || 0);
+      appState.outputTokens = num;
+      document.getElementById('output-slider').value = Math.min(8192, num);
+      renderCostTable();
+    }
+
+    function setOutputTokens(val) {
+      appState.outputTokens = val;
+      document.getElementById('output-slider').value = Math.min(8192, val);
+      document.getElementById('output-tokens-input').value = val;
+      renderCostTable();
+    }
+
+    function setVolumeMultiplier(multiplier, btn) {
+      appState.volumeMultiplier = multiplier;
+      document.querySelectorAll('.vol-btn').forEach(b => {
+        b.classList.remove('bg-emerald-600', 'text-white', 'active', 'shadow-sm');
+        b.classList.add('bg-slate-200', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300');
+      });
+      btn.classList.add('bg-emerald-600', 'text-white', 'active', 'shadow-sm');
+      btn.classList.remove('bg-slate-200', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300');
+
+      const label = multiplier === 1 ? 'Total Cost (1 Call)' : `Total Cost (${formatNumber(multiplier)} Calls)`;
+      document.getElementById('table-header-total').textContent = label;
+      renderCostTable();
+    }
+
+    function setCacheRate(rate, btn) {
+      appState.cacheDiscountRate = rate;
+      document.querySelectorAll('.cache-btn').forEach(b => {
+        b.classList.remove('bg-cyan-600', 'text-white', 'active', 'shadow-sm');
+        b.classList.add('bg-slate-200', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300');
+      });
+      btn.classList.add('bg-cyan-600', 'text-white', 'active', 'shadow-sm');
+      btn.classList.remove('bg-slate-200', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300');
+
+      const text = rate === 0 ? '0% (Cache Miss)' : rate === 0.5 ? '50% Cache Hit' : '80% Cache Hit';
+      document.getElementById('cache-discount-label').textContent = text;
+      renderCostTable();
+    }
+
+    function filterByProvider(provider, btn) {
+      appState.providerFilter = provider;
+      document.querySelectorAll('.provider-pill').forEach(b => {
+        b.classList.remove('bg-slate-800', 'text-white', 'dark:bg-slate-700', 'active');
+        b.classList.add('bg-slate-200', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300');
+      });
+      btn.classList.add('bg-slate-800', 'text-white', 'dark:bg-slate-700', 'active');
+      btn.classList.remove('bg-slate-200', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300');
+      renderCostTable();
+    }
+
+    function handleSortSelectChange(sortVal) {
+      appState.sortBy = sortVal;
+      updateSortHeaderIcons();
+      renderCostTable();
+    }
+
+    function toggleSort(colKey) {
+      const current = appState.sortBy;
+      let nextSort = '';
+
+      if (colKey === 'cost') {
+        nextSort = current === 'cost-asc' ? 'cost-desc' : 'cost-asc';
+      } else if (colKey === 'input') {
+        nextSort = current === 'input-asc' ? 'input-desc' : 'input-asc';
+      } else if (colKey === 'output') {
+        nextSort = current === 'output-asc' ? 'output-desc' : 'output-asc';
+      } else if (colKey === 'context') {
+        nextSort = current === 'context-desc' ? 'context-asc' : 'context-desc';
+      } else if (colKey === 'name') {
+        nextSort = current === 'name-asc' ? 'name-desc' : 'name-asc';
+      }
+
+      appState.sortBy = nextSort;
+      const sortSelect = document.getElementById('sort-select');
+      if (sortSelect) sortSelect.value = nextSort;
+
+      updateSortHeaderIcons();
+      renderCostTable();
+    }
+
+    function updateSortHeaderIcons() {
+      const icons = {
+        name: document.getElementById('sort-icon-name'),
+        context: document.getElementById('sort-icon-context'),
+        input: document.getElementById('sort-icon-input'),
+        output: document.getElementById('sort-icon-output'),
+        cost: document.getElementById('sort-icon-cost')
+      };
+
+      Object.values(icons).forEach(icon => {
+        if (icon) {
+          icon.textContent = '↕';
+          icon.className = 'font-mono text-xs text-slate-400';
+        }
+      });
+
+      const s = appState.sortBy;
+      if (s === 'cost-asc' && icons.cost) {
+        icons.cost.textContent = '▲';
+        icons.cost.className = 'font-mono text-xs text-emerald-500 font-bold';
+      } else if (s === 'cost-desc' && icons.cost) {
+        icons.cost.textContent = '▼';
+        icons.cost.className = 'font-mono text-xs text-emerald-500 font-bold';
+      } else if (s === 'input-asc' && icons.input) {
+        icons.input.textContent = '▲';
+        icons.input.className = 'font-mono text-xs text-emerald-500 font-bold';
+      } else if (s === 'input-desc' && icons.input) {
+        icons.input.textContent = '▼';
+        icons.input.className = 'font-mono text-xs text-emerald-500 font-bold';
+      } else if (s === 'output-asc' && icons.output) {
+        icons.output.textContent = '▲';
+        icons.output.className = 'font-mono text-xs text-emerald-500 font-bold';
+      } else if (s === 'output-desc' && icons.output) {
+        icons.output.textContent = '▼';
+        icons.output.className = 'font-mono text-xs text-emerald-500 font-bold';
+      } else if (s === 'context-desc' && icons.context) {
+        icons.context.textContent = '▼';
+        icons.context.className = 'font-mono text-xs text-emerald-500 font-bold';
+      } else if (s === 'context-asc' && icons.context) {
+        icons.context.textContent = '▲';
+        icons.context.className = 'font-mono text-xs text-emerald-500 font-bold';
+      } else if (s === 'name-asc' && icons.name) {
+        icons.name.textContent = '▲';
+        icons.name.className = 'font-mono text-xs text-emerald-500 font-bold';
+      } else if (s === 'name-desc' && icons.name) {
+        icons.name.textContent = '▼';
+        icons.name.className = 'font-mono text-xs text-emerald-500 font-bold';
+      }
+    }
+
+    // ========================================================
+    // 4. COST CALCULATION & MATRIX RENDERING
+    // ========================================================
+    function calculateModelCost(model) {
+      const inTokens = appState.inputTokens;
+      const outTokens = appState.outputTokens;
+      const mult = appState.volumeMultiplier;
+      const cacheRate = appState.cacheDiscountRate;
+
+      // Determine active rates, accounting for tiered long-context thresholds
+      let activeInputPerM = model.inputPerM;
+      let activeOutputPerM = model.outputPerM;
+      let activeCachedInputPerM = model.cachedInputPerM || (model.inputPerM * 0.5);
+      let isTierActive = false;
+      let tierBadge = '';
+      let activeBillingNote = model.billingNote || '';
+
+      // Compare total input before cache discounts; output length and call volume
+      // do not change a single request's input threshold.
+      if (model.tierThreshold && inTokens > model.tierThreshold) {
+        isTierActive = true;
+        tierBadge = model.tierBadge || `>${Math.round(model.tierThreshold / 1000)}k Tier Active`;
+        if (model.tierInputPerM !== undefined) activeInputPerM = model.tierInputPerM;
+        if (model.tierOutputPerM !== undefined) activeOutputPerM = model.tierOutputPerM;
+        if (model.tierCachedInputPerM !== undefined) activeCachedInputPerM = model.tierCachedInputPerM;
+        activeBillingNote = `[${tierBadge}] Total prompt input (${formatNumber(inTokens)} tokens, including cache hits) exceeds ${formatNumber(model.tierThreshold)} threshold. Rates for the entire request: $${activeInputPerM}/1M in, $${activeCachedInputPerM}/1M cache read, $${activeOutputPerM}/1M out.`;
+      }
+
+      // Determine active rates, accounting for DeepSeek off-peak toggle
+      if (appState.isDeepSeekOffPeak && model.provider === 'DeepSeek' && model.offPeakInput !== undefined) {
+        activeInputPerM = model.offPeakInput;
+        activeOutputPerM = model.offPeakOutput;
+        activeCachedInputPerM = model.offPeakCache;
+      }
+
+      const effectiveInputPerM = (activeInputPerM * (1 - cacheRate)) + (activeCachedInputPerM * cacheRate);
+
+      const singleInputCost = (inTokens / 1_000_000) * effectiveInputPerM;
+      const singleOutputCost = (outTokens / 1_000_000) * activeOutputPerM;
+      const singleTotalCost = singleInputCost + singleOutputCost;
+
+      const totalCost = singleTotalCost * mult;
+      const totalInputCost = singleInputCost * mult;
+      const totalOutputCost = singleOutputCost * mult;
+
+      return {
+        singleInputCost,
+        singleOutputCost,
+        singleTotalCost,
+        totalCost,
+        totalInputCost,
+        totalOutputCost,
+        displayInputPerM: activeInputPerM,
+        displayOutputPerM: activeOutputPerM,
+        isTierActive,
+        tierBadge,
+        activeBillingNote
+      };
+    }
+
+    function renderCostTable() {
+      const tbody = document.getElementById('cost-table-body');
+      tbody.innerHTML = '';
+
+      const allModels = [...DEFAULT_MODELS, ...customModels];
+
+      let filtered = allModels.filter(m => {
+        if (appState.providerFilter === 'all') return true;
+        if (appState.providerFilter === 'Custom') return m.isCustom;
+        return m.provider.toLowerCase() === appState.providerFilter.toLowerCase();
+      });
+
+      const calculated = filtered.map(model => ({
+        model,
+        costs: calculateModelCost(model)
+      }));
+
+      calculated.sort((a, b) => {
+        const s = appState.sortBy;
+        if (s === 'cost-asc') return a.costs.totalCost - b.costs.totalCost;
+        if (s === 'cost-desc') return b.costs.totalCost - a.costs.totalCost;
+        if (s === 'input-asc') return a.costs.totalInputCost - b.costs.totalInputCost;
+        if (s === 'input-desc') return b.costs.totalInputCost - a.costs.totalInputCost;
+        if (s === 'output-asc') return a.costs.totalOutputCost - b.costs.totalOutputCost;
+        if (s === 'output-desc') return b.costs.totalOutputCost - a.costs.totalOutputCost;
+        if (s === 'context-desc') return parseContextTokens(b.model.context) - parseContextTokens(a.model.context);
+        if (s === 'context-asc') return parseContextTokens(a.model.context) - parseContextTokens(b.model.context);
+        if (s === 'name-asc') return a.model.name.localeCompare(b.model.name);
+        if (s === 'name-desc') return b.model.name.localeCompare(a.model.name);
+        if (s === 'provider-asc') return a.model.provider.localeCompare(b.model.provider);
+        return 0;
+      });
+
+      if (calculated.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500 font-sans">No models matching filter criteria.</td></tr>`;
+        return;
+      }
+
+      calculated.forEach((item, index) => {
+        const { model, costs } = item;
+        const isCheapest = (appState.sortBy === 'cost-asc') && index === 0 && costs.totalCost > 0;
+
+        const row = document.createElement('tr');
+        row.className = `hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors ${isCheapest ? 'bg-emerald-50 dark:bg-emerald-950/20' : ''}`;
+
+        let providerColor = 'text-slate-600 border-slate-300 bg-slate-100 dark:text-slate-400 dark:border-slate-700 dark:bg-slate-800';
+        if (model.provider === 'OpenAI') providerColor = 'text-emerald-700 border-emerald-300 bg-emerald-100/60 dark:text-emerald-400 dark:border-emerald-800/50 dark:bg-emerald-950/30';
+        if (model.provider === 'Anthropic') providerColor = 'text-purple-700 border-purple-300 bg-purple-100/60 dark:text-purple-400 dark:border-purple-800/50 dark:bg-purple-950/30';
+        if (model.provider === 'Google') providerColor = 'text-blue-700 border-blue-300 bg-blue-100/60 dark:text-blue-400 dark:border-blue-800/50 dark:bg-blue-950/30';
+        if (model.provider === 'DeepSeek') providerColor = 'text-cyan-700 border-cyan-300 bg-cyan-100/60 dark:text-cyan-400 dark:border-cyan-800/50 dark:bg-cyan-950/30';
+
+        row.innerHTML = `
+          <td class="py-3 px-4">
+            <div class="flex items-center flex-wrap gap-1.5">
+              <span class="font-semibold text-slate-900 dark:text-slate-100 font-sans">${escapeHtml(model.name)}</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded border font-sans ${providerColor}">${escapeHtml(model.provider)}</span>
+              ${costs.isTierActive ? `<span class="text-[10px] font-sans px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60 font-semibold inline-flex items-center gap-1 shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>${escapeHtml(costs.tierBadge)}</span>` : ''}
+              ${isCheapest ? '<span class="text-[10px] font-sans px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/30 font-medium">Cheapest</span>' : ''}
+              ${model.isCustom ? '<span class="text-[10px] font-sans px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300 border border-amber-300 dark:border-amber-500/30">Custom</span>' : ''}
+              ${costs.activeBillingNote ? `
+                <span class="group relative cursor-pointer ${costs.isTierActive ? 'text-amber-500 dark:text-amber-400' : 'text-slate-400 hover:text-amber-500 dark:hover:text-amber-400'} transition-colors inline-flex items-center" tabindex="0">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                  <span class="hidden group-hover:block absolute left-0 sm:left-1/2 sm:-translate-x-1/2 bottom-full mb-1.5 w-64 p-2.5 text-[11px] leading-relaxed text-slate-100 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl z-40 pointer-events-none">
+                    <span class="font-bold text-amber-400 block mb-0.5 flex items-center gap-1">
+                      <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                      ${costs.isTierActive ? 'Tiered Billing Active:' : 'Special Billing Rule:'}
+                    </span>
+                    ${escapeHtml(costs.activeBillingNote)}
+                  </span>
+                </span>
+              ` : ''}
+            </div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 font-sans mt-0.5">${escapeHtml(model.tag || '')}</div>
+          </td>
+          <td class="py-3 px-3 text-right text-slate-700 dark:text-slate-300 font-mono text-xs">
+            ${escapeHtml(model.context || '1M')}
+          </td>
+          <td class="py-3 px-3 text-right text-slate-700 dark:text-slate-300 font-mono text-xs">
+            $${formatCurrency(costs.totalInputCost)}
+            ${costs.isTierActive ? '<span class="text-[9px] text-amber-600 dark:text-amber-400 font-sans block font-semibold">[Tiered Rate]</span>' : ''}
+          </td>
+          <td class="py-3 px-3 text-right text-slate-700 dark:text-slate-300 font-mono text-xs">
+            $${formatCurrency(costs.totalOutputCost)}
+          </td>
+          <td class="py-3 px-4 text-right font-mono font-bold text-sm ${isCheapest ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-slate-100'}">
+            $${formatCurrency(costs.totalCost)}
+          </td>
+          <td class="py-3 px-3 text-center text-xs text-slate-500 dark:text-slate-400 font-mono">
+            <span title="Input rate" class="${costs.isTierActive ? 'text-amber-600 dark:text-amber-400 font-semibold' : ''}">$${costs.displayInputPerM}</span> / <span title="Output rate" class="${costs.isTierActive ? 'text-amber-600 dark:text-amber-400 font-semibold' : ''}">$${costs.displayOutputPerM}</span>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // ========================================================
+    // 5. SAMPLE PROMPT PRESETS (2026 UPDATE)
+    // ========================================================
+    function loadSamplePrompt(type) {
+      const textarea = document.getElementById('calc-input');
+      if (type === 'system') {
+        textarea.value = `You are an elite autonomous agent utilizing October 2026 frontier reasoning models (GPT-6.1 Sol, Claude 5.5, Gemini 3.8 Flash, and DeepSeek-V4.1).\n\nYour task is to orchestrate complex multi-agent workflows, inspect tool call arguments, diagnose cloud microservices, and produce high-performance code adhering to strict type safety and subword token efficiency.\n\nAlways optimize context usage by minimizing redundant schema definitions and caching deterministic system guidelines.`;
+      } else if (type === 'code') {
+        textarea.value = `// Autonomous agent tool executor pattern (2026 Architecture)\nasync function executeAgentToolCall(toolCall: { id: string; function: { name: string; arguments: string } }): Promise<any> {\n  const args = JSON.parse(toolCall.function.arguments);\n  console.log(\`[Agent Dispatch] Invoking \${toolCall.function.name} with cache read enabled\`);\n  const toolHandler = TOOL_REGISTRY[toolCall.function.name];\n  if (!toolHandler) throw new Error(\`Unknown tool: \${toolCall.function.name}\`);\n  return await toolHandler(args);\n}`;
+      } else if (type === 'cjk') {
+        textarea.value = `本项目深度同步 2026 年 10 月前沿大模型基准（Claude Opus/Sonnet/Haiku 5.5、OpenAI GPT-6.1 Sol 与 GPT-6 Astra、Google Gemini 3.8 Flash 以及 DeepSeek-V4.1 Flash 与 Pro）。\n内置针对非 ASCII 与中日韩字符（CJK）的多语言 BPE 膨胀比分析，全面评估 DeepSeek-V4 128k 词表与 o200k/GPT-6 词表的多字节压缩效能，杜绝生产级 API 账单溢出。`;
+      }
+      handleCalculatorInputUpdate();
+      showToast('2026 Sample prompt loaded');
+    }
+
+    function clearCalculatorInput() {
+      document.getElementById('calc-input').value = '';
+      handleCalculatorInputUpdate();
+    }
+
+    async function pasteClipboardToCalculator() {
+      try {
+        const text = await navigator.clipboard.readText();
+        if (text) {
+          document.getElementById('calc-input').value = text;
+          handleCalculatorInputUpdate();
+          showToast('Pasted from clipboard');
+        }
+      } catch (err) {
+        showToast('Clipboard access denied, paste manually with Ctrl+V / Cmd+V');
+      }
+    }
+
+    // ========================================================
+    // 6. FEATURE B: AI TOOL CALL & JSON SCHEMA VALIDATOR
+    // ========================================================
+    function handleJsonInputUpdate() {
+      const text = document.getElementById('json-input').value.trim();
+      const statusPill = document.getElementById('json-status-pill');
+      const detectedPill = document.getElementById('schema-detected-pill');
+      const errorContainer = document.getElementById('json-error-container');
+      const analysisContainer = document.getElementById('schema-analysis-container');
+
+      if (!text) {
+        statusPill.innerHTML = '<span class="w-2 h-2 rounded-full bg-slate-400"></span> Empty JSON';
+        statusPill.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium font-sans bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700';
+        detectedPill.classList.add('hidden');
+        errorContainer.classList.add('hidden');
+        analysisContainer.classList.add('hidden');
+        return;
+      }
+
+      try {
+        const parsed = JSON.parse(text);
+        statusPill.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Valid JSON';
+        statusPill.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium font-sans bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800/50';
+        errorContainer.classList.add('hidden');
+
+        const analysis = analyzeToolSchema(parsed);
+        detectedPill.textContent = analysis.detectedFormat;
+        detectedPill.className = 'inline-flex text-xs px-2.5 py-1 rounded-lg bg-cyan-100 dark:bg-cyan-950/40 text-cyan-800 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800/40 font-sans font-medium';
+        detectedPill.classList.remove('hidden');
+
+        renderSchemaAnalysis(analysis, parsed);
+        analysisContainer.classList.remove('hidden');
+
+      } catch (err) {
+        statusPill.innerHTML = '<span class="w-2 h-2 rounded-full bg-red-500"></span> Syntax Error';
+        statusPill.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium font-sans bg-red-100 dark:bg-red-950/40 text-red-800 dark:text-red-300 border border-red-300 dark:border-red-800/50';
+        detectedPill.classList.add('hidden');
+        analysisContainer.classList.add('hidden');
+
+        renderJsonError(text, err);
+        errorContainer.classList.remove('hidden');
+      }
+    }
+
+    function renderJsonError(text, err) {
+      const message = err.message || 'Invalid JSON syntax';
+      let line = 1;
+      let col = 1;
+      let position = null;
+
+      const posMatch = message.match(/position\s+(\d+)/i);
+      if (posMatch) {
+        position = parseInt(posMatch[1], 10);
+      }
+
+      const lineColMatch = message.match(/line\s+(\d+)(?:,\s*column\s+(\d+)|\s+column\s+(\d+))?/i);
+      if (lineColMatch) {
+        line = parseInt(lineColMatch[1], 10);
+        col = parseInt(lineColMatch[2] || lineColMatch[3] || '1', 10);
+      } else if (position !== null) {
+        const sliced = text.slice(0, position);
+        const lines = sliced.split('\n');
+        line = lines.length;
+        col = lines[lines.length - 1].length + 1;
+      }
+
+      const allLines = text.split('\n');
+      line = Math.max(1, Math.min(line, allLines.length));
+      col = Math.max(1, col);
+
+      document.getElementById('json-error-location').textContent = `Line ${line}, Col ${col}`;
+      document.getElementById('json-error-message').textContent = message;
+
+      let hint = '';
+      if (text.includes("'")) {
+        hint = 'Tip: JSON requires double quotes (") for strings and object keys, not single quotes (\').';
+      } else if (/,\s*[}\]]/.test(text)) {
+        hint = 'Tip: Trailing commas before closing braces "}" or brackets "]" are prohibited in standard JSON.';
+      } else if (/[{\[,]\s*[a-zA-Z0-9_]+\s*:/.test(text)) {
+        hint = 'Tip: Object keys must be wrapped in double quotes, e.g. "param_name": "value".';
+      }
+      document.getElementById('json-error-hint').textContent = hint;
+
+      const startLine = Math.max(1, line - 2);
+      const endLine = Math.min(allLines.length, line + 2);
+      let snippet = '';
+
+      for (let i = startLine; i <= endLine; i++) {
+        const lineText = allLines[i - 1] || '';
+        const lineNumStr = String(i).padStart(3, ' ');
+        if (i === line) {
+          snippet += `<span class="text-red-600 dark:text-red-400 font-bold">${lineNumStr} | ${escapeHtml(lineText)}</span>\n`;
+          const pointerPad = ' '.repeat(Math.max(0, col - 1));
+          snippet += `<span class="text-red-600 dark:text-red-400 font-bold">    | ${pointerPad}^ (Error here)</span>\n`;
+        } else {
+          snippet += `<span class="text-slate-400 dark:text-slate-500">${lineNumStr} | ${escapeHtml(lineText)}</span>\n`;
+        }
+      }
+
+      document.getElementById('json-error-context').innerHTML = snippet;
+    }
+
+    function analyzeToolSchema(obj) {
+      const result = {
+        detectedFormat: 'Valid JSON Object',
+        badges: [],
+        warnings: [],
+        details: {}
+      };
+
+      if (!obj || typeof obj !== 'object') {
+        result.detectedFormat = 'Primitive JSON Value';
+        return result;
+      }
+
+      if (Array.isArray(obj)) {
+        if (obj.length > 0 && obj.every(item => item && (item.type === 'function' || item.input_schema || item.function))) {
+          result.detectedFormat = 'Multi-Tool Definitions Array';
+          result.badges.push({ text: `${obj.length} Tools`, color: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 border-emerald-300 dark:border-emerald-500/30' });
+          return result;
+        }
+        if (obj.length > 0 && obj.every(item => item && item.id && (item.type === 'function' || item.function))) {
+          result.detectedFormat = 'Tool Calls Execution Response Array';
+          result.badges.push({ text: `${obj.length} Tool Executions`, color: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-500/20 dark:text-cyan-300 border-cyan-300 dark:border-cyan-500/30' });
+          return result;
+        }
+      }
+
+      if (obj.type === 'function' && obj.function) {
+        result.detectedFormat = 'OpenAI Tool Definition (v1/chat)';
+        result.badges.push({ text: 'OpenAI Format', color: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 border-emerald-300 dark:border-emerald-500/30' });
+        const fn = obj.function;
+        result.details['Function Name'] = fn.name || '(unnamed)';
+        result.details['Description'] = fn.description || '(none)';
+
+        if (fn.strict === true) {
+          result.badges.push({ text: 'Strict Mode: ON', color: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-500/20 dark:text-indigo-300 border-indigo-300 dark:border-indigo-500/30' });
+        }
+
+        if (fn.parameters) {
+          if (fn.parameters.type !== 'object') {
+            result.warnings.push('OpenAI parameters root type should be "object".');
+          }
+          if (fn.strict === true && fn.parameters.additionalProperties !== false) {
+            result.warnings.push('OpenAI Strict Mode enabled: parameters must include "additionalProperties": false.');
+          }
+          if (fn.parameters.properties) {
+            const propKeys = Object.keys(fn.parameters.properties);
+            result.details['Parameters Count'] = propKeys.length;
+            result.badges.push({ text: `${propKeys.length} Parameters`, color: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-500/20 dark:text-cyan-300 border-cyan-300 dark:border-cyan-500/30' });
+
+            const missingDesc = propKeys.filter(k => !fn.parameters.properties[k].description);
+            if (missingDesc.length > 0) {
+              result.warnings.push(`Recommended: Add 'description' to parameter(s): [${missingDesc.join(', ')}] to improve LLM parameter calling accuracy.`);
+            }
+          }
+        }
+        return result;
+      }
+
+      if (obj.name && obj.input_schema) {
+        result.detectedFormat = 'Anthropic Claude Tool Definition';
+        result.badges.push({ text: 'Anthropic Format', color: 'bg-purple-100 text-purple-800 dark:bg-purple-500/20 dark:text-purple-300 border-purple-300 dark:border-purple-500/30' });
+        result.details['Tool Name'] = obj.name;
+        result.details['Description'] = obj.description || '(none)';
+
+        if (obj.input_schema.type !== 'object') {
+          result.warnings.push('Anthropic input_schema root type should be "object".');
+        }
+        if (obj.input_schema.properties) {
+          const propKeys = Object.keys(obj.input_schema.properties);
+          result.details['Input Properties'] = propKeys.length;
+          result.badges.push({ text: `${propKeys.length} Properties`, color: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-500/20 dark:text-cyan-300 border-cyan-300 dark:border-cyan-500/30' });
+        }
+        return result;
+      }
+
+      if (typeof obj === 'object') {
+        const keys = Object.keys(obj);
+        result.detectedFormat = 'Tool Call Invocation Arguments';
+        result.badges.push({ text: `${keys.length} Argument Keys`, color: 'bg-slate-200 text-slate-800 dark:bg-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-600' });
+        result.details['Arguments Passed'] = keys.join(', ') || '(none)';
+        return result;
+      }
+
+      return result;
+    }
+
+    function renderSchemaAnalysis(analysis, parsed) {
+      const badgesContainer = document.getElementById('schema-badges');
+      badgesContainer.innerHTML = '';
+      analysis.badges.forEach(b => {
+        const span = document.createElement('span');
+        span.className = `px-2 py-0.5 rounded text-[11px] font-mono border ${b.color}`;
+        span.textContent = b.text;
+        badgesContainer.appendChild(span);
+      });
+
+      const warningsContainer = document.getElementById('schema-warnings-list');
+      warningsContainer.innerHTML = '';
+      if (analysis.warnings.length > 0) {
+        analysis.warnings.forEach(w => {
+          const div = document.createElement('div');
+          div.className = 'flex items-start gap-1.5 text-xs text-amber-700 dark:text-amber-300';
+          div.innerHTML = `<svg class="w-4 h-4 flex-shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg><span>${escapeHtml(w)}</span>`;
+          warningsContainer.appendChild(div);
+        });
+      } else {
+        warningsContainer.innerHTML = '<div class="text-xs text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> No schema lint warnings found. Ready for production invocation.</div>';
+      }
+
+      const detailsContainer = document.getElementById('schema-summary-details');
+      detailsContainer.innerHTML = '';
+      Object.entries(analysis.details).forEach(([key, val]) => {
+        const div = document.createElement('div');
+        div.innerHTML = `<span class="text-slate-500 dark:text-slate-400">${escapeHtml(key)}:</span> <span class="text-slate-800 dark:text-slate-200 font-mono">${escapeHtml(String(val))}</span>`;
+        detailsContainer.appendChild(div);
+      });
+    }
+
+    function formatJson() {
+      const textarea = document.getElementById('json-input');
+      try {
+        const parsed = JSON.parse(textarea.value);
+        textarea.value = JSON.stringify(parsed, null, 2);
+        handleJsonInputUpdate();
+        showToast('JSON formatted (2 spaces)');
+      } catch (err) {
+        showToast('Cannot format invalid JSON');
+      }
+    }
+
+    function minifyJson() {
+      const textarea = document.getElementById('json-input');
+      try {
+        const raw = textarea.value;
+        const initialTokens = estimateTokens(raw).tokens;
+        const parsed = JSON.parse(raw);
+        const minified = JSON.stringify(parsed);
+        textarea.value = minified;
+        handleJsonInputUpdate();
+
+        const newTokens = estimateTokens(minified).tokens;
+        const saved = Math.max(0, initialTokens - newTokens);
+        const pct = initialTokens > 0 ? Math.round((saved / initialTokens) * 100) : 0;
+        showToast(`Minified! Saved ~${saved} tokens (${pct}%)`);
+      } catch (err) {
+        showToast('Cannot minify invalid JSON');
+      }
+    }
+
+    async function copyJsonToClipboard() {
+      const text = document.getElementById('json-input').value;
+      if (!text) return;
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast('Copied JSON to clipboard');
+      } catch (e) {
+        showToast('Copy failed');
+      }
+    }
+
+    // ========================================================
+    // 7. CLOSED-LOOP ESTIMATION (SCHEMA VALIDATOR -> CALCULATOR)
+    // ========================================================
+    function estimateSchemaTokenCost(minifyFirst = false) {
+      const jsonInput = document.getElementById('json-input');
+      let text = jsonInput.value.trim();
+
+      if (!text) {
+        showToast('JSON Schema is empty. Please paste or load a sample first.');
+        return;
+      }
+
+      if (minifyFirst) {
+        try {
+          const parsed = JSON.parse(text);
+          text = JSON.stringify(parsed);
+          jsonInput.value = text;
+          handleJsonInputUpdate();
+        } catch (err) {
+          showToast('Invalid JSON syntax; cannot minify.');
+          return;
+        }
+      }
+
+      const calcInput = document.getElementById('calc-input');
+      calcInput.value = text;
+      handleCalculatorInputUpdate();
+
+      if (appState.currentView === 'validator') {
+        switchView('calculator');
+      }
+
+      document.getElementById('section-calculator').scrollIntoView({ behavior: 'smooth' });
+
+      calcInput.classList.add('ring-4', 'ring-emerald-500/60');
+      setTimeout(() => {
+        calcInput.classList.remove('ring-4', 'ring-emerald-500/60');
+      }, 1500);
+
+      const tokenEstimate = appState.inputTokens;
+      showToast(`Schema transferred! Estimated ~${formatNumber(tokenEstimate)} tokens across 2026 models.`);
+    }
+
+    function loadSampleSchema(type) {
+      const textarea = document.getElementById('json-input');
+      if (type === 'openai') {
+        textarea.value = JSON.stringify({
+          type: "function",
+          function: {
+            name: "get_weather_forecast",
+            description: "Retrieve real-time weather and forecast data for a specified location.",
+            strict: true,
+            parameters: {
+              type: "object",
+              properties: {
+                location: {
+                  type: "string",
+                  description: "City and state or country, e.g. 'San Francisco, CA' or 'Tokyo, Japan'"
+                },
+                days: {
+                  type: "integer",
+                  description: "Number of forecast days (1 to 7)"
+                },
+                unit: {
+                  type: "string",
+                  enum: ["celsius", "fahrenheit"],
+                  description: "Temperature unit system"
+                }
+              },
+              required: ["location", "days", "unit"],
+              additionalProperties: false
+            }
+          }
+        }, null, 2);
+      } else if (type === 'claude') {
+        textarea.value = JSON.stringify({
+          name: "query_database",
+          description: "Execute a read-only SQL query against the analytics database warehouse.",
+          input_schema: {
+            type: "object",
+            properties: {
+              sql_query: {
+                type: "string",
+                description: "The sanitized SELECT SQL query to execute."
+              },
+              timeout_seconds: {
+                type: "number",
+                description: "Maximum execution timeout in seconds (default 30)."
+              }
+            },
+            required: ["sql_query"]
+          }
+        }, null, 2);
+      } else if (type === 'execution') {
+        textarea.value = JSON.stringify({
+          tool_calls: [
+            {
+              id: "call_94a0f443b23e",
+              type: "function",
+              function: {
+                name: "get_weather_forecast",
+                arguments: JSON.stringify({
+                  location: "Tokyo, Japan",
+                  days: 3,
+                  unit: "celsius"
+                })
+              }
+            }
+          ]
+        }, null, 2);
+      } else if (type === 'multi') {
+        textarea.value = JSON.stringify([
+          {
+            type: "function",
+            function: {
+              name: "web_search",
+              description: "Search current internet web pages and news articles.",
+              parameters: {
+                type: "object",
+                properties: {
+                  query: { type: "string", description: "Search query string" },
+                  limit: { type: "integer", description: "Maximum search results" }
+                },
+                required: ["query"]
+              }
+            }
+          },
+          {
+            type: "function",
+            function: {
+              name: "send_notification_email",
+              description: "Dispatch an urgent transactional email notification to a user.",
+              parameters: {
+                type: "object",
+                properties: {
+                  recipient: { type: "string", description: "Target recipient email" },
+                  subject: { type: "string", description: "Email subject line" },
+                  body: { type: "string", description: "Markdown email body" }
+                },
+                required: ["recipient", "subject", "body"]
+              }
+            }
+          }
+        ], null, 2);
+      }
+      handleJsonInputUpdate();
+      showToast('Loaded sample schema');
+    }
+
+    // ========================================================
+    // 8. VIEW SWITCHING & RESPONSIVENESS
+    // ========================================================
+    function switchView(viewName) {
+      appState.currentView = viewName;
+      const calcSection = document.getElementById('section-calculator');
+      const valSection = document.getElementById('section-validator');
+      const calcBtn = document.getElementById('tab-calculator-btn');
+      const valBtn = document.getElementById('tab-validator-btn');
+      const splitBtn = document.getElementById('tab-split-btn');
+
+      [calcBtn, valBtn, splitBtn].forEach(b => {
+        b.classList.remove('bg-white', 'dark:bg-slate-700', 'text-slate-900', 'dark:text-white', 'shadow-sm');
+        b.classList.add('text-slate-600', 'dark:text-slate-400');
+      });
+
+      if (viewName === 'calculator') {
+        calcSection.classList.remove('hidden');
+        valSection.classList.add('hidden');
+        calcSection.className = 'space-y-6';
+        valSection.className = 'space-y-6 hidden';
+        calcBtn.classList.add('bg-white', 'dark:bg-slate-700', 'text-slate-900', 'dark:text-white', 'shadow-sm');
+        calcBtn.classList.remove('text-slate-600', 'dark:text-slate-400');
+      } else if (viewName === 'validator') {
+        calcSection.classList.add('hidden');
+        valSection.classList.remove('hidden');
+        calcSection.className = 'space-y-6 hidden';
+        valSection.className = 'space-y-6';
+        valBtn.classList.add('bg-white', 'dark:bg-slate-700', 'text-slate-900', 'dark:text-white', 'shadow-sm');
+        valBtn.classList.remove('text-slate-600', 'dark:text-slate-400');
+      } else if (viewName === 'split') {
+        calcSection.classList.remove('hidden');
+        valSection.classList.remove('hidden');
+        calcSection.className = 'space-y-6 lg:w-1/2';
+        valSection.className = 'space-y-6 lg:w-1/2';
+        document.getElementById('views-container').className = 'space-y-8 lg:space-y-0 lg:flex lg:gap-6';
+        splitBtn.classList.add('bg-white', 'dark:bg-slate-700', 'text-slate-900', 'dark:text-white', 'shadow-sm');
+        splitBtn.classList.remove('text-slate-600', 'dark:text-slate-400');
+        return;
+      }
+
+      document.getElementById('views-container').className = 'space-y-8';
+    }
+
+    // ========================================================
+    // 9. URL STATE SYNCHRONIZATION & SHARE CALCULATION
+    // ========================================================
+    function buildShareableUrl() {
+      const params = new URLSearchParams();
+      params.set('p', appState.providerFilter);
+      params.set('out', appState.outputTokens);
+      params.set('vol', appState.volumeMultiplier);
+      params.set('cache', appState.cacheDiscountRate);
+      params.set('offpeak', appState.isDeepSeekOffPeak ? '1' : '0');
+      params.set('sort', appState.sortBy);
+      params.set('view', appState.currentView);
+
+      if (appState.inputText && appState.inputText.trim()) {
+        const cleanPrompt = appState.inputText.slice(0, 3000);
+        params.set('text', cleanPrompt);
+      }
+
+      const hashStr = '#' + params.toString();
+      const fullUrl = window.location.origin + window.location.pathname + hashStr;
+      return { fullUrl, hashStr };
+    }
+
+    async function copyShareLink() {
+      try {
+        const { fullUrl, hashStr } = buildShareableUrl();
+        window.history.replaceState(null, '', hashStr);
+        await navigator.clipboard.writeText(fullUrl);
+        showToast('Shareable link copied to clipboard!');
+      } catch (err) {
+        showToast('Unable to copy automatically. Link updated in URL bar!');
+      }
+    }
+
+    function initFromUrlState() {
+      const hash = window.location.hash.slice(1);
+      if (!hash) return false;
+
+      try {
+        const params = new URLSearchParams(hash);
+
+        if (params.has('text')) {
+          const text = params.get('text');
+          document.getElementById('calc-input').value = text;
+        }
+
+        if (params.has('out')) {
+          const outTokens = parseInt(params.get('out'), 10);
+          if (!isNaN(outTokens)) {
+            appState.outputTokens = outTokens;
+            document.getElementById('output-tokens-input').value = outTokens;
+            document.getElementById('output-slider').value = Math.min(8192, outTokens);
+          }
+        }
+
+        if (params.has('vol')) {
+          const vol = parseInt(params.get('vol'), 10);
+          if (!isNaN(vol)) {
+            appState.volumeMultiplier = vol;
+            document.querySelectorAll('.vol-btn').forEach(btn => {
+              const text = btn.textContent.trim();
+              if (
+                (vol === 1 && text.includes('1 Call')) ||
+                (vol === 1000 && text.includes('1K')) ||
+                (vol === 100000 && text.includes('100K')) ||
+                (vol === 1000000 && text.includes('1M'))
+              ) {
+                btn.classList.add('bg-emerald-600', 'text-white', 'active', 'shadow-sm');
+                btn.classList.remove('bg-slate-200', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300');
+              } else {
+                btn.classList.remove('bg-emerald-600', 'text-white', 'active', 'shadow-sm');
+                btn.classList.add('bg-slate-200', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300');
+              }
+            });
+            const label = vol === 1 ? 'Total Cost (1 Call)' : `Total Cost (${formatNumber(vol)} Calls)`;
+            document.getElementById('table-header-total').textContent = label;
+          }
+        }
+
+        if (params.has('cache')) {
+          const cacheRate = parseFloat(params.get('cache'));
+          if (!isNaN(cacheRate)) {
+            appState.cacheDiscountRate = cacheRate;
+            document.querySelectorAll('.cache-btn').forEach(btn => {
+              const text = btn.textContent.trim();
+              if (
+                (cacheRate === 0 && text.includes('0%')) ||
+                (cacheRate === 0.5 && text.includes('50%')) ||
+                (cacheRate === 0.8 && text.includes('80%'))
+              ) {
+                btn.classList.add('bg-cyan-600', 'text-white', 'active', 'shadow-sm');
+                btn.classList.remove('bg-slate-200', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300');
+              } else {
+                btn.classList.remove('bg-cyan-600', 'text-white', 'active', 'shadow-sm');
+                btn.classList.add('bg-slate-200', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300');
+              }
+            });
+            const text = cacheRate === 0 ? '0% (Cache Miss)' : cacheRate === 0.5 ? '50% Cache Hit' : '80% Cache Hit';
+            document.getElementById('cache-discount-label').textContent = text;
+          }
+        }
+
+        if (params.has('offpeak') && params.get('offpeak') === '1') {
+          appState.isDeepSeekOffPeak = true;
+          const btn = document.getElementById('deepseek-offpeak-toggle');
+          if (btn) {
+            btn.textContent = 'Off-Peak: ON (50% Off)';
+            btn.className = 'px-2 py-0.5 text-[11px] font-mono rounded bg-emerald-600 text-white font-medium shadow-sm transition-colors';
+          }
+        }
+
+        if (params.has('p')) {
+          const provider = params.get('p');
+          appState.providerFilter = provider;
+          document.querySelectorAll('.provider-pill').forEach(btn => {
+            if (btn.textContent.trim().toLowerCase().includes(provider.toLowerCase())) {
+              btn.classList.add('bg-slate-800', 'text-white', 'dark:bg-slate-700', 'active');
+              btn.classList.remove('bg-slate-200', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300');
+            } else {
+              btn.classList.remove('bg-slate-800', 'text-white', 'dark:bg-slate-700', 'active');
+              btn.classList.add('bg-slate-200', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300');
+            }
+          });
+        }
+
+        if (params.has('sort')) {
+          appState.sortBy = params.get('sort');
+          const sortSelect = document.getElementById('sort-select');
+          if (sortSelect) sortSelect.value = appState.sortBy;
+          updateSortHeaderIcons();
+        }
+
+        if (params.has('view')) {
+          switchView(params.get('view'));
+        }
+
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    // ========================================================
+    // 10. PRIVACY, TERMS & CUSTOM PRICING MODALS
+    // ========================================================
+    function openPrivacyModal() {
+      document.getElementById('privacy-modal').classList.remove('hidden');
+    }
+
+    function closePrivacyModal() {
+      document.getElementById('privacy-modal').classList.add('hidden');
+      if (window.location.hash === '#privacy' || window.location.hash === '#privacy-policy') {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    }
+
+    function openTermsModal() {
+      document.getElementById('terms-modal').classList.remove('hidden');
+    }
+
+    function closeTermsModal() {
+      document.getElementById('terms-modal').classList.add('hidden');
+      if (window.location.hash === '#terms' || window.location.hash === '#terms-of-service') {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    }
+
+    function copyFeedbackEmail() {
+      const email = 'support@token-calculator.dev';
+      navigator.clipboard.writeText(email).then(() => {
+        showToast('Feedback email copied: ' + email);
+      }).catch(() => {
+        showToast('Feedback email: ' + email);
+      });
+    }
+
+    function openCustomPricingModal() {
+      document.getElementById('custom-pricing-modal').classList.remove('hidden');
+    }
+
+    function closeCustomPricingModal() {
+      document.getElementById('custom-pricing-modal').classList.add('hidden');
+    }
+
+    function saveCustomModel(e) {
+      e.preventDefault();
+      const name = document.getElementById('custom-model-name').value.trim();
+      const provider = document.getElementById('custom-model-provider').value.trim();
+      const context = document.getElementById('custom-model-context').value.trim();
+      const inputPerM = parseFloat(document.getElementById('custom-model-input-rate').value) || 0;
+      const outputPerM = parseFloat(document.getElementById('custom-model-output-rate').value) || 0;
+
+      const newModel = {
+        id: 'custom-' + Date.now(),
+        name,
+        provider,
+        context,
+        inputPerM,
+        cachedInputPerM: inputPerM * 0.5,
+        outputPerM,
+        tag: 'User Defined Model (2026)',
+        billingNote: 'Custom rate stored locally in browser localStorage.',
+        isCustom: true
+      };
+
+      customModels.push(newModel);
+      try {
+        localStorage.setItem('llm_custom_models', JSON.stringify(customModels));
+      } catch(e) {}
+
+      document.getElementById('custom-model-form').reset();
+      closeCustomPricingModal();
+      renderCostTable();
+      showToast(`Custom model "${name}" added!`);
+    }
+
+    function clearCustomModels() {
+      if (confirm('Reset all custom models?')) {
+        customModels = [];
+        try {
+          localStorage.removeItem('llm_custom_models');
+        } catch(e) {}
+        closeCustomPricingModal();
+        renderCostTable();
+        showToast('Custom models cleared');
+      }
+    }
+
+    // ========================================================
+    // 11. HASH ROUTING & SEO LANDING PAGES
+    // ========================================================
+    function handleHashRouting() {
+      const rawHash = (window.location.hash || '').toLowerCase();
+      if (!rawHash) return;
+
+      if (rawHash.startsWith('#schema-validator') || rawHash.startsWith('#validator')) {
+        switchView('validator');
+        document.title = "AI Tool Call & Function Calling JSON Validator | OpenAI & Claude Schemas (Client-Side)";
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+          metaDesc.setAttribute('content', 'Validate, lint, format, and minify OpenAI Function Calling definitions and Anthropic Claude Tool schemas 100% client-side with zero telemetry.');
+        }
+        const el = document.getElementById('section-validator');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+
+      if (rawHash.startsWith('#cache-calculator') || rawHash.startsWith('#prompt-caching') || rawHash.startsWith('#caching')) {
+        switchView('calculator');
+        document.title = "LLM Prompt Caching Cost Calculator | OpenAI, Anthropic & Gemini Cache Discount Simulator";
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+          metaDesc.setAttribute('content', 'Simulate prompt caching discounts (50% to 95% savings) across Claude 5.5, GPT-6.1 Sol, and Gemini 3.8 Flash. Real-time cost comparison table.');
+        }
+        const card = document.getElementById('cache-controls-card');
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('ring-2', 'ring-cyan-500', 'shadow-xl');
+          setTimeout(() => card.classList.remove('ring-2', 'ring-cyan-500', 'shadow-xl'), 3500);
+        }
+        return;
+      }
+
+      if (rawHash === '#cost-matrix' || rawHash === '#pricing-table') {
+        switchView('calculator');
+        const el = document.getElementById('cost-matrix-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+
+      if (rawHash === '#audit-log') {
+        switchView('calculator');
+        const details = document.getElementById('audit-log');
+        if (details) {
+          details.open = true;
+          details.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+      }
+
+      if (rawHash === '#privacy' || rawHash === '#privacy-policy') {
+        openPrivacyModal();
+        return;
+      }
+
+      if (rawHash === '#terms' || rawHash === '#terms-of-service') {
+        openTermsModal();
+        return;
+      }
+
+      if (rawHash === '#faq' || rawHash === '#faq-section') {
+        const el = document.getElementById('faq-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+
+      if (rawHash === '#optimization-tips') {
+        const el = document.getElementById('optimization-tips');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+    }
+
+    // ========================================================
+    // 12. THEME TOGGLE & TOAST HELPERS
+    // ========================================================
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.classList.toggle('dark');
+      appState.isDark = isDark;
+      try {
+        localStorage.setItem('llm_theme', isDark ? 'dark' : 'light');
+      } catch(e) {}
+      updateThemeIcons();
+    }
+
+    function updateThemeIcons() {
+      const sun = document.getElementById('theme-icon-sun');
+      const moon = document.getElementById('theme-icon-moon');
+      if (document.documentElement.classList.contains('dark')) {
+        sun.classList.remove('hidden');
+        moon.classList.add('hidden');
+      } else {
+        sun.classList.add('hidden');
+        moon.classList.remove('hidden');
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.textContent = message;
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      clearTimeout(window._toastTimeout);
+      window._toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 2500);
+    }
+
+    function formatNumber(num) {
+      return new Intl.NumberFormat().format(num);
+    }
+
+    function formatCurrency(val) {
+      if (val === 0) return '0.00';
+      if (val < 0.0001) return val.toFixed(6);
+      if (val < 0.01) return val.toFixed(4);
+      if (val < 10) return val.toFixed(4);
+      return val.toFixed(2);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // ========================================================
+    // 13. INITIALIZATION
+    // ========================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        const savedTheme = localStorage.getItem('llm_theme');
+        if (savedTheme === 'light') {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch(e) {}
+      updateThemeIcons();
+
+      const restored = initFromUrlState();
+
+      if (!restored) {
+        loadSamplePrompt('system');
+      } else {
+        handleCalculatorInputUpdate();
+      }
+
+      updateSortHeaderIcons();
+
+      window.addEventListener('hashchange', handleHashRouting);
+      handleHashRouting();
+    });
+  </script>
+
+</body>
+</html>

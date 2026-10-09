@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service | LLM Token Cost Calculator</title>
+  <meta name="description" content="Terms of Service for LLM Token Cost Calculator & Tool Call JSON Validator. Informational estimation disclaimer and open-source licensing terms.">
+  <link rel="canonical" href="https://token-cost-calculator.pages.dev/terms.html">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-emerald-500/30 selection:text-emerald-400">
+
+  <!-- Header -->
+  <header class="border-b border-slate-200 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5 text-slate-900 dark:text-white font-bold hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+        <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </span>
+        <span class="text-sm sm:text-base">LLM Token Cost Calculator</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="text-xs sm:text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
+          &larr; Back to Calculator
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4 py-10 flex-1 space-y-8">
+    <div class="space-y-2">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-400 border border-indigo-300 dark:border-indigo-800/40">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
+        Legal Terms
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">Terms of Service</h1>
+      <p class="text-xs text-slate-500 dark:text-slate-400 font-mono">Last Updated &amp; Effective Date: October 9, 2026</p>
+    </div>
+
+    <div class="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6 text-sm leading-relaxed text-slate-700 dark:text-slate-300 shadow-sm">
+
+      <section class="space-y-2">
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          1. Informational Estimation Disclaimer
+        </h2>
+        <p>
+          All token metrics, character-to-token ratios, and cost estimates computed by this tool are heuristics designed for system architecture planning, cloud cost modeling, and educational comparison.
+        </p>
+        <p class="text-xs text-slate-500 dark:text-slate-400 italic">
+          Official API billing may vary based on model vocabulary, non-Latin scripts, formatting tokens, and proprietary provider tokenizers (e.g. OpenAI o200k_base, Anthropic Claude tokenizers, DeepSeek 128k BPE). Users must cross-verify mission-critical enterprise budgets against their official vendor consoles.
+        </p>
+      </section>
+
+      <section class="space-y-2">
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-cyan-500"></span>
+          2. Rate Accuracy &amp; Tiered Pricing Changes
+        </h2>
+        <p>
+          Model pricing tables (including Claude 5.5, GPT-6, Gemini 3, and DeepSeek V4) reflect public documentation audited as of October 2026. Special billing conditions—such as Gemini 3.1 Pro 200k token tiers, Anthropic 5-minute cache TTL write costs, and DeepSeek off-peak discounts—are provided for simulation purposes. Model providers may modify API rates without notice.
+        </p>
+      </section>
+
+      <section class="space-y-2">
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+          3. Open Source License &amp; Permitted Use
+        </h2>
+        <p>
+          This utility is made available under the open-source <strong>MIT License</strong>. You are permitted to use, adapt, and share calculations for commercial software architectures, team budget proposals, and academic research without charge.
+        </p>
+        <p class="text-xs text-slate-500 dark:text-slate-400">
+          THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+        </p>
+      </section>
+
+      <section class="space-y-2">
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+          4. Contact &amp; Corrections
+        </h2>
+        <p>
+          If you detect a pricing discrepancy, tiered rate adjustment, or wish to submit feedback, please open an issue on our GitHub repository or contact our team:
+        </p>
+        <p class="font-mono text-xs text-emerald-600 dark:text-emerald-400 bg-slate-100 dark:bg-slate-800/80 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
+          Email: <a href="mailto:support@token-calculator.dev" class="underline">support@token-calculator.dev</a><br>
+          GitHub Repository: <a href="https://github.com/huyongbo668881985/tokens" target="_blank" rel="noopener noreferrer" class="underline">https://github.com/huyongbo668881985/tokens</a>
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 py-6 text-xs text-slate-500">
+    <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="hover:text-emerald-600 dark:hover:text-emerald-400">Calculator</a>
+        <span>&bull;</span>
+        <a href="privacy.html" class="hover:text-emerald-600 dark:hover:text-emerald-400">Privacy Policy</a>
+        <span>&bull;</span>
+        <a href="mailto:support@token-calculator.dev" class="hover:text-emerald-600 dark:hover:text-emerald-400">Feedback</a>
+      </div>
+      <div>&copy; 2026 LLM Token Calculator. Free MIT Open Source Utility.</div>
+    </div>
+  </footer>
+
+</body>
+</html>
