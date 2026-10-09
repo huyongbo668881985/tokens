@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npx serve .",
     "dev": "python3 -m http.server 8080",
-    "test": "node --test tests/*.test.cjs"
+    "test": "node --test tests/*.test.cjs",
+    "build": "tailwindcss -c tailwind.config.cjs -i styles/input.css -o assets/site.css --minify"
   },
   "keywords": [
     "llm",
@@ -19,6 +20,9 @@
     "function-calling",
     "prompt-engineering"
   ],
-  "author": "Google DeepMind pair programming assistant",
-  "license": "MIT"
+  "author": "Token Budget contributors",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
 }

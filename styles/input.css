@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+    .adsense-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100px;
+      width: 100%;
+      margin: 2.5rem 0;
+      border: 1px dashed rgba(148, 163, 184, 0.4);
+      border-radius: 0.75rem;
+      background-color: rgba(241, 245, 249, 0.6);
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+      overflow: hidden;
+      contain: layout paint;
+    }
+    .dark .adsense-slot {
+      border-color: rgba(71, 85, 105, 0.5);
+      background-color: rgba(15, 23, 42, 0.4);
+    }
+    .adsense-slot-large {
+      min-height: 280px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(241, 245, 249, 0.8);
+    }
+    .dark ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.5);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.8);
+    }
+
+    details > summary {
+      list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+      display: none;
+    }
+    details[open] summary svg.chevron {
+      transform: rotate(180deg);
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      appearance: none;
+      height: 18px;
+      width: 18px;
+      border-radius: 9999px;
+      background: #10b981;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+
+    .workspace { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 20px; }
+    .panel { background: #fff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 24px; min-width: 0; }
+    .dark .panel { background: #151f30; border-color: #2b374b; }
+    .step { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 8px; font-size: 12px; font-weight: 700; background: #d1fae5; color: #047857; }
+    .dark .step { background: #163c37; color: #6ee7b7; }
+    .segmented { display: flex; gap: 4px; padding: 4px; border-radius: 10px; background: #f1f5f9; }
+    .dark .segmented { background: #0e1727; }
+    .segmented button { flex: 1; padding: 9px 8px; border-radius: 7px; font-size: 12px; font-weight: 600; color: #64748b; }
+    .segmented button[aria-pressed="true"] { background: #fff; color: #0f172a; box-shadow: 0 1px 4px #00000012; }
+    .dark .segmented button { color: #94a3b8; }
+    .dark .segmented button[aria-pressed="true"] { background: #2a384e; color: #f8fafc; }
+    .field-label { display: block; color: #475569; font-size: 12px; font-weight: 500; margin-bottom: 7px; }
+    .dark .field-label { color: #cbd5e1; }
+    .field { width: 100%; padding: 11px 12px; border: 1px solid #cbd5e1; border-radius: 9px; background: #f8fafc; font-size: 14px; color: #0f172a; }
+    .dark .field { background: #0e1727; border-color: #35435a; color: #e2e8f0; }
+    .field:focus { outline: 2px solid #10b981; outline-offset: 2px; }
+    button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid #10b981; outline-offset: 3px; }
+    .help { font-size: 12px; line-height: 1.65; color: #64748b; }
+    .dark .help { color: #94a3b8; }
+    .result-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 24px; }
+    .result-value { font-size: clamp(24px, 3vw, 34px); font-weight: 650; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; line-height: 1.25; }
+    .result-panel { background: linear-gradient(110deg, #ecfdf5, #f8fafc); }
+    .dark .result-panel { background: linear-gradient(110deg, #12332f, #151f30 70%); border-color: #2c5149; }
+    .breakdown-track { height: 7px; border-radius: 8px; overflow: hidden; background: #cbd5e1; display: flex; }
+    .dark .breakdown-track { background: #334155; }
+    #cost-matrix-section th { white-space: nowrap; }
+    #section-calculator, #section-validator, #cost-matrix-section, #audit-log { scroll-margin-top: 92px; }
+    @media (max-width: 800px) { .workspace { grid-template-columns: 1fr; } .result-grid { grid-template-columns: 1fr; gap: 20px; } .panel { padding: 20px; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; transition: none !important; } }

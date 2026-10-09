@@ -97,3 +97,14 @@ test('DeepSeek off-peak pricing remains correct for long prompts', () => {
   assert.equal(result.isTierActive, false);
   near(result.totalCost, 0.3 * (0.15 + 0.003) / 2 + 0.0006);
 });
+
+// Google Cloud global Standard PayGo, checked 2026-10-09:
+// https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing
+test('Gemini Flash Cyber uses Google Cloud global Standard rates, including cache reads', () => {
+  const result = calculate('gemini-3-8-flash-cyber', 10000, { cache: 0.8 });
+  assert.equal(result.displayInputPerM, 1.5);
+  assert.equal(result.displayOutputPerM, 7.5);
+  near(result.singleInputCost, 0.0042);
+  near(result.singleOutputCost, 0.0075);
+  near(result.totalCost, 0.0117);
+});
