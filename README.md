@@ -132,6 +132,14 @@ To ensure strict compliance with Google AdSense quality guidelines and maximize 
 
 ## 🌐 1-Click Deployment Options
 
+### Production Server
+
+Production URL: https://tokens.yayaagent.com
+
+The static site runs behind Caddy on the `new` SSH host. Releases are stored under `/srv/tokens/releases/`, and `/srv/tokens/current` points to the active release. Deploy only `index.html`, `privacy.html`, `terms.html`, `og-image.png`, `robots.txt`, and `sitemap.xml`; no Node.js, Python, or build step is required on the server.
+
+The site configuration is in `deploy/Caddyfile`. Import it into the server's existing Caddy configuration, validate the combined configuration, and reload Caddy. The domain's A record must point to the server and ports 80/443 must be reachable so Caddy can obtain and renew HTTPS certificates.
+
 ### 1. Cloudflare Pages
 1. Push repository to GitHub (`https://github.com/huyongbo668881985/tokens`).
 2. Link repository in Cloudflare Pages dashboard.
@@ -152,7 +160,7 @@ To ensure strict compliance with Google AdSense quality guidelines and maximize 
 
 `og-image.png` is the committed 1200 × 630 PNG cover used by Open Graph and Twitter link previews. It is served as a static file and requires no build step. `index.html` includes its dimensions, MIME type, and alternative text.
 
-Before publishing to a new domain, replace `https://token-cost-calculator.pages.dev` with the final public site URL in `index.html`, `privacy.html`, `terms.html`, `robots.txt`, and `sitemap.xml`. Keep `og:image` and `twitter:image` as absolute HTTPS URLs ending in `/og-image.png` (including a repository path prefix when using GitHub Pages). Do not depend on JavaScript to update these tags: preview crawlers read the initial HTML.
+The production site URL is `https://tokens.yayaagent.com`. Before publishing to another domain, replace this URL in `index.html`, `privacy.html`, `terms.html`, `robots.txt`, and `sitemap.xml`. Keep `og:image` and `twitter:image` as absolute HTTPS URLs ending in `/og-image.png` (including a repository path prefix when using GitHub Pages). Do not depend on JavaScript to update these tags: preview crawlers read the initial HTML.
 
 To regenerate the cover locally, use Python 3 with Pillow installed and run `python3 scripts/generate-og-image.py`. Deployments use the existing PNG directly.
 

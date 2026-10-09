@@ -1,0 +1,6 @@
+tokens.yayaagent.com {
+    root * /srv/tokens/current
+    encode zstd gzip
+    header X-Content-Type-Options nosniff
+    file_server
+}

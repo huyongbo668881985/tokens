@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://token-cost-calculator.pages.dev/sitemap.xml
+Sitemap: https://tokens.yayaagent.com/sitemap.xml
